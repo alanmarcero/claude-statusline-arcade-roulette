@@ -20,7 +20,7 @@ The player moves right as the context window fills. Two chasers follow it:
 - The 5-hour chaser moves with your 5-hour rate limit usage.
 - The 7-day chaser enters the field when you pass 50% of your weekly limit.
 
-The player and the chasers take turns to hop into the top row, the scenery scrolls left, and the title cycles through colors. The animation moves one frame per second.
+The player and the chasers take turns to hop into the top row, the scenery scrolls left, and the title cycles through colors. The animation moves one frame per second while the session works. It stops 30 seconds after the transcript last changed, so the terminal does not show idle tabs as busy.
 
 When a chaser reaches 100%, it lands on the player and the footer shows GAME OVER. The footer also shows the remaining percentage and reset countdown for each limit, plus the `effortLevel` from `~/.claude/settings.json`.
 
