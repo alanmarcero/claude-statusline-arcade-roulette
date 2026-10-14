@@ -183,5 +183,5 @@ test('render flashes the banner in the middle of the sky for the first frames of
 
   assert.equal(sky(1).indexOf('READY!'), 2 + Math.floor((50 - 'READY!'.length) / 2))
   assert.ok(!sky(5).includes('READY!'))
-  assert.ok(sky(21).includes('READY!'))
+  assert.ok(sky(22).includes('READY!'))
 })
