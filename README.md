@@ -3,7 +3,7 @@
 A Claude Code status line that deals each Claude session one of fifteen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
 
 ```
-CLAUDE v2.5.0             Opus 5.5 1M context 60% left
+CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
 ╭══ DONKEY KONG ═════════════════════════════════════════════╮
 ║ Ѫ ᛉ▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀ ║
 ║    H            H        ѡ   H ᕗ          H        ѡ   H   ║
