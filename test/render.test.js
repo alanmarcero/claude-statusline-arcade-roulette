@@ -236,3 +236,12 @@ test('customize deals a Mortal Kombat II hero and a different rival onto the sco
   assert.ok(boards.every(({ left, right }) => left.split(' {')[0] !== right.split(' {')[0]))
   assert.ok(new Set(boards.map(({ left }) => left)).size > 3)
 })
+
+test('render twinkles stars in the empty backdrop cells of a starry game only', () => {
+  const backdrop = (id, frame) =>
+    render(INPUT, { ...OPTIONS, game: GAMES.find((game) => game.id === id), frame }).replace(ANSI, '').split('\n')[2]
+
+  assert.ok(backdrop('double-dragon', 0).includes('·'))
+  assert.notEqual(backdrop('double-dragon', 0), backdrop('double-dragon', 2))
+  assert.ok(!backdrop('tron', 0).includes('·'))
+})
