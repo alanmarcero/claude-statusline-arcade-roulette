@@ -15,18 +15,15 @@ The games: Pac-Man, Space Invaders, Frogger, Donkey Kong, Asteroids, Centipede, 
 
 ## How to read it
 
-The player moves right as the context window fills. Two chasers follow it:
-
-- The 5-hour chaser moves with your 5-hour rate limit usage.
-- The 7-day chaser enters the field when you pass 50% of your weekly limit.
+The field is an animation that runs while Claude works. It does not track usage: the player drifts back and forth, and two chasers close in on it and fall back on a fixed loop.
 
 Each game draws its own screen in 256 colors, close to the original cabinet: a black Pac-Man maze with peach pellets and a blinking power pellet, Frogger's purple bank and blue river with logs and turtles, red Donkey Kong girders under cyan ladders, Tetris stacks, a blue Super Mario Bros sky with brick and question blocks over a brick floor, Rampage buildings that turn to rubble behind the monster, a Double Dragon brick wall with a neon 雙截龍 sign over a cracked street, the Mortal Kombat II Dead Pool with hooks over bubbling acid, and the Mortal Kombat 3 subway with a train speeding past. The ground row shows the scenery the player walks on. The top row shows the game's sky (invader formations, cars, a brick wall, clouds) and scrolls at half speed for a parallax effect. An actor takes the background color of the scenery under it.
 
 The player and the chasers take turns to hop into the top row, the scenery scrolls left, the title shows the game's own logo colors with a white glint sweeping across it, and lights chase along the top border. Each game also animates in place: invaders swap poses as they march, Frogger traffic drives right while the water ripples and turtles dive, the Donkey Kong oil drum burns, asteroids tumble the other way, the Tron grid pulses, Tetris rows flash like a line clear, Mario's ? blocks flash and coins spin, Mortal Kombat torches flicker, and Rampage and Double Dragon windows flicker on and off. Pac-Man's ghosts turn blue and flash every twelve frames as if he ate a power pellet, a UFO crosses above the invaders, the centipede drags its body, Tron's light cycles leave light walls, and Frogger trucks pull trailers. In Space Invaders, Asteroids, Centipede, Super Mario Bros, all three Mortal Kombat games and Double Dragon, the player fires a shot that crosses the field three cells per frame. The animation moves one frame per second while the session works. It stops 30 seconds after the transcript last changed, so the terminal does not show idle tabs as busy.
 
-The bottom border shows a blinking 1UP and a score of 10 points for each line Claude added or removed in the session. HI is the best score for that game across all sessions. While the session is idle, the border shows INSERT COIN between the scores. It is kept in `~/.claude/arcade-roulette-scores.json`, which the status line writes only when a session beats it.
+The bottom border shows a blinking 1UP and a score of 10 points for each line Claude added or removed in the session. HI is the best score for that game across all sessions. It is kept in `~/.claude/arcade-roulette-scores.json`, which the status line writes only when a session beats it. While the session is idle, the border shows INSERT COIN between the scores.
 
-When a chaser reaches 100%, it lands on the player and the footer shows GAME OVER. The footer also shows the remaining percentage and reset countdown for each limit, plus the `effortLevel` from `~/.claude/settings.json`.
+The header shows the model and how much of the context window is left. The footer shows the remaining percentage and reset countdown for each limit, plus the `effortLevel` from `~/.claude/settings.json`.
 
 ## Install
 

@@ -33,30 +33,24 @@ test('formatCountdown picks the largest units and handles missing or past resets
   assert.equal(formatCountdown(undefined, NOW), '')
 })
 
-test('layout starts the player after the runway and keeps the weekly chaser off until 50% used', () => {
-  const scene = layout({ fieldWidth: 50, contextUsed: 0, fiveHourUsed: 10, sevenDayUsed: 49 })
+test('layout swings the player within three cells of its spot with each chaser behind the actor ahead', () => {
+  const scenes = Array.from({ length: 120 }, (_, frame) => layout(50, frame))
 
-  assert.equal(scene.player, 12)
-  assert.deepEqual(
-    scene.chasers.map((chaser) => chaser.key),
-    ['fiveHour'],
-  )
-  assert.equal(scene.isGameOver, false)
+  assert.ok(scenes.every(({ player }) => player >= 27 && player <= 33))
+  assert.ok(scenes.every(({ player, chasers: [fiveHour, sevenDay] }) => sevenDay.position < fiveHour.position && fiveHour.position < player))
+  assert.equal(new Set(scenes.map(({ player }) => player)).size, 7)
+  assert.deepEqual(layout(50, 7), layout(50, 127))
 })
 
-test('layout puts a chaser at 100% on the player and ends the game', () => {
-  const scene = layout({ fieldWidth: 50, contextUsed: 40, fiveHourUsed: 100, sevenDayUsed: 60 })
+test('render draws the same field whatever the context and rate limit usage', () => {
+  const field = (input) => render(input, { ...OPTIONS, frame: 4 }).split('\n').slice(1, 4)
+  const full = {
+    ...INPUT,
+    context_window: { used_percentage: 95, context_window_size: 1_000_000 },
+    rate_limits: { five_hour: { used_percentage: 100 }, seven_day: { used_percentage: 10 } },
+  }
 
-  assert.equal(scene.chasers[0].key, 'fiveHour')
-  assert.equal(scene.chasers[0].position, scene.player)
-  assert.equal(scene.isGameOver, true)
-})
-
-test('layout keeps the less-used chaser one cell behind when both land on the same cell', () => {
-  const scene = layout({ fieldWidth: 50, contextUsed: 40, fiveHourUsed: 61, sevenDayUsed: 60 })
-
-  assert.equal(scene.chasers[1].key, 'sevenDay')
-  assert.equal(scene.chasers[1].position, scene.chasers[0].position - 1)
+  assert.deepEqual(field(full), field(INPUT))
 })
 
 test('render draws every game with both field rows and both borders at the same width on every frame', () => {
@@ -79,14 +73,6 @@ test('render shows the title, limits and effort while the game runs', () => {
   assert.equal(lines[5], 'ᗩ 7d 40% ↓3d0h  ᗣ 5h 70% ↓1h30m  xhigh')
 })
 
-test('render replaces the effort label with GAME OVER when a limit runs out', () => {
-  const exhausted = { ...INPUT, rate_limits: { five_hour: { used_percentage: 100 } } }
-
-  const footer = render(exhausted, OPTIONS).replace(ANSI, '').split('\n')[5]
-
-  assert.match(footer, /^ᗣ 5h 0% +GAME OVER$/)
-})
-
 test('isAirborne lifts each actor for two frames of six, one actor at a time', () => {
   const hops = ['player', 'fiveHour', 'sevenDay'].map((actor) =>
     Array.from({ length: 6 }, (_, frame) => isAirborne(actor, frame)),
@@ -96,15 +82,13 @@ test('isAirborne lifts each actor for two frames of six, one actor at a time', (
   assert.ok(Array.from({ length: 6 }, (_, frame) => hops.filter((frames) => frames[frame]).length === 1).every(Boolean))
 })
 
-test('render moves the player into the sky row while it hops and keeps it grounded at game over', () => {
+test('render moves the player into the sky row while it hops', () => {
   const player = GAMES[0].player.glyphs[0]
-  const rows = (input, frame) => render(input, { ...OPTIONS, frame }).replace(ANSI, '').split('\n').slice(2, 4)
-  const exhausted = { ...INPUT, rate_limits: { five_hour: { used_percentage: 100 } } }
+  const rows = (frame) => render(INPUT, { ...OPTIONS, frame }).replace(ANSI, '').split('\n').slice(2, 4)
 
-  assert.ok(rows(INPUT, 0)[0].includes(player))
-  assert.ok(!rows(INPUT, 0)[1].includes(player))
-  assert.ok(rows(INPUT, 2)[1].includes(player))
-  assert.ok(!rows(exhausted, 0)[0].includes(GAMES[0].chasers.fiveHour.glyphs[0]))
+  assert.ok(rows(0)[0].includes(player))
+  assert.ok(!rows(0)[1].includes(player))
+  assert.ok(rows(2)[1].includes(player))
 })
 
 test('render shows ten points per changed line as 1UP and the larger of it and the high score as HI', () => {
@@ -137,17 +121,21 @@ test('tile steps a multi-character glyph and a color list by frame, offset by th
   assert.deepEqual([neighbor.glyph, neighbor.color], ['~', 'b'])
 })
 
-test('render fires the shot ahead of the player three cells per frame and holds fire at game over', () => {
+test('render fires the shot from two cells ahead of the player, three cells further each frame', () => {
   const invaders = GAMES.find((game) => game.id === 'invaders')
-  const exhausted = { ...INPUT, rate_limits: { five_hour: { used_percentage: 100 } } }
-  const shotColumn = (input, frame) =>
-    render(input, { ...OPTIONS, game: invaders, frame })
+  const shotColumn = (frame) =>
+    render(INPUT, { ...OPTIONS, game: invaders, frame })
       .replace(ANSI, '')
       .split('\n')[3]
       .indexOf(invaders.shot.glyphs[frame % invaders.shot.glyphs.length])
+  // The row starts with the border and a space, so field cell n is column n + 2.
+  const expected = (frame) => {
+    const { player } = layout(50, frame)
+    return 2 + player + 2 + ((frame * 3) % (50 - player - 2))
+  }
 
-  assert.equal(shotColumn(INPUT, 3) - shotColumn(INPUT, 2), 3)
-  assert.equal(shotColumn(exhausted, 2), -1)
+  assert.equal(shotColumn(13), expected(13))
+  assert.equal(shotColumn(14), expected(14))
 })
 
 test('render keeps the row width when an actor or the field edge covers half of a wide glyph', () => {
@@ -172,7 +160,7 @@ test('render shows INSERT COIN between the scores while the session is idle and 
 test('render drags a chaser tail along the ground behind it', () => {
   const tron = GAMES.find((game) => game.id === 'tron')
   const { glyphs, color, length } = tron.chasers.fiveHour.tail
-  const scene = layout({ fieldWidth: 50, contextUsed: 40, fiveHourUsed: 30, sevenDayUsed: 60 })
+  const scene = layout(50, 3)
   const leader = scene.chasers.find((chaser) => chaser.key === 'fiveHour').position
 
   const ground = render(INPUT, { ...OPTIONS, game: tron, frame: 3 }).split('\n')[3]
