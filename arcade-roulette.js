@@ -26,12 +26,14 @@ const columns = Number(ttySize.split(' ')[1]) || FALLBACK_COLUMNS
 // Claude Code sends one session_id per instance, so each instance keeps its game across renders.
 const game = GAMES.find((candidate) => candidate.id === values.game) ?? pickGame(input.session_id ?? process.ppid)
 
+const nowSeconds = Math.floor(Date.now() / 1000)
+
 console.log(
   render(input, {
     game,
     width: Number(values.width) || columns - BUDDY_RESERVE,
-    frame: Math.floor(Date.now() / 1000) % 2,
-    nowSeconds: Math.floor(Date.now() / 1000),
+    frame: nowSeconds,
+    nowSeconds,
     effort: settings.effortLevel,
   }),
 )

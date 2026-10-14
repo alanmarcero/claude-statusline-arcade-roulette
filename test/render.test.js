@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { GAMES } from '../lib/games.js'
-import { formatCountdown, layout, pickGame, render } from '../lib/render.js'
+import { formatCountdown, isAirborne, layout, pickGame, render } from '../lib/render.js'
 
 const ANSI = /\x1b\[[0-9;]*m/g
 const NOW = 1_800_000_000
@@ -57,13 +57,15 @@ test('layout keeps the less-used chaser one cell behind when both land on the sa
   assert.equal(scene.chasers[1].position, scene.chasers[0].position - 1)
 })
 
-test('render draws every game with the field and both borders at the same width', () => {
-  const widths = GAMES.map((game) => {
-    const [, top, field, bottom] = render(INPUT, { ...OPTIONS, game }).split('\n')
-    return new Set([top, field, bottom].map((line) => line.replace(ANSI, '').length))
-  })
+test('render draws every game with both field rows and both borders at the same width on every frame', () => {
+  const widths = GAMES.flatMap((game) =>
+    Array.from({ length: 6 }, (_, frame) => {
+      const [, top, sky, ground, bottom] = render(INPUT, { ...OPTIONS, game, frame }).split('\n')
+      return new Set([top, sky, ground, bottom].map((line) => line.replace(ANSI, '').length))
+    }),
+  )
 
-  assert.equal(widths.length, 10)
+  assert.equal(widths.length, 60)
   assert.ok(widths.every((lineWidths) => lineWidths.size === 1 && lineWidths.has(54)))
 })
 
@@ -72,13 +74,33 @@ test('render shows the title, limits and effort while the game runs', () => {
 
   assert.match(lines[0], /^CLAUDE v2\.5\.0 +Opus 5\.5 1M context 60% left$/)
   assert.match(lines[1], /PAC-MAN/)
-  assert.equal(lines[4], 'ᗩ 7d 40% ↓3d0h  ᗣ 5h 70% ↓1h30m  xhigh')
+  assert.equal(lines[5], 'ᗩ 7d 40% ↓3d0h  ᗣ 5h 70% ↓1h30m  xhigh')
 })
 
 test('render replaces the effort label with GAME OVER when a limit runs out', () => {
   const exhausted = { ...INPUT, rate_limits: { five_hour: { used_percentage: 100 } } }
 
-  const footer = render(exhausted, OPTIONS).replace(ANSI, '').split('\n')[4]
+  const footer = render(exhausted, OPTIONS).replace(ANSI, '').split('\n')[5]
 
   assert.match(footer, /^ᗣ 5h 0% +GAME OVER$/)
+})
+
+test('isAirborne lifts each actor for two frames of six, one actor at a time', () => {
+  const hops = ['player', 'fiveHour', 'sevenDay'].map((actor) =>
+    Array.from({ length: 6 }, (_, frame) => isAirborne(actor, frame)),
+  )
+
+  assert.ok(hops.every((frames) => frames.filter(Boolean).length === 2))
+  assert.ok(Array.from({ length: 6 }, (_, frame) => hops.filter((frames) => frames[frame]).length === 1).every(Boolean))
+})
+
+test('render moves the player into the sky row while it hops and keeps it grounded at game over', () => {
+  const player = GAMES[0].player.glyphs[0]
+  const rows = (input, frame) => render(input, { ...OPTIONS, frame }).replace(ANSI, '').split('\n').slice(2, 4)
+  const exhausted = { ...INPUT, rate_limits: { five_hour: { used_percentage: 100 } } }
+
+  assert.ok(rows(INPUT, 0)[0].includes(player))
+  assert.ok(!rows(INPUT, 0)[1].includes(player))
+  assert.ok(rows(INPUT, 2)[1].includes(player))
+  assert.ok(!rows(exhausted, 0)[0].includes(GAMES[0].chasers.fiveHour.glyphs[0]))
 })

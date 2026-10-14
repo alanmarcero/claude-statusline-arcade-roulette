@@ -5,7 +5,8 @@ A Claude Code status line that deals each Claude session one of ten classic arca
 ```
 CLAUDE v2.5.0             Opus 5.5 1M context 60% left
 ╭══ DONKEY KONG ═════════════════════════════════════╮
-║ ───────◉───────ѻ──────────ᕗ─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴Ŧ┴─ ║
+║      ˙        ◉             ·                      ║
+║ ───────────────ѻ──────────ᕗ─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴Ŧ┴─ ║
 ╰════════════════════════════════════════════════════╯
 ѻ 7d 40% ↓3d12h  ◉ 5h 70% ↓1h35m  xhigh
 ```
@@ -18,6 +19,8 @@ The player moves right as the context window fills. Two chasers follow it:
 
 - The 5-hour chaser moves with your 5-hour rate limit usage.
 - The 7-day chaser enters the field when you pass 50% of your weekly limit.
+
+The player and the chasers take turns to hop into the top row, the scenery scrolls left, and the title cycles through colors. The animation moves one frame per second.
 
 When a chaser reaches 100%, it lands on the player and the footer shows GAME OVER. The footer also shows the remaining percentage and reset countdown for each limit, plus the `effortLevel` from `~/.claude/settings.json`.
 
@@ -34,9 +37,12 @@ Add it to `~/.claude/settings.json`:
 ```json
 "statusLine": {
   "type": "command",
-  "command": "node ~/Development/claude-statusline-arcade-roulette/arcade-roulette.js"
+  "command": "node ~/Development/claude-statusline-arcade-roulette/arcade-roulette.js",
+  "refreshInterval": 1
 }
 ```
+
+`refreshInterval` makes Claude Code run the status line every second. Without it, the status line only redraws when the session changes, so the animation stops while the session is idle.
 
 ## Options
 
