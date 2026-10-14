@@ -207,8 +207,8 @@ test('render pins the caption one cell in from each edge of the base row', () =>
 
   const base = (frame) => render(INPUT, { ...OPTIONS, game: invaders, frame }).replace(ANSI, '').split('\n')[5]
 
-  assert.match(base(0), /^║ ▔3 ᐃᐃ.*CREDIT 00▔ ║$/)
-  assert.match(base(7), /^║ ▔3 ᐃᐃ.*CREDIT 00▔ ║$/)
+  assert.match(base(0), /^║ ▔3 ΔΔ.*CREDIT 00▔ ║$/)
+  assert.match(base(7), /^║ ▔3 ΔΔ.*CREDIT 00▔ ║$/)
 })
 
 test('render steps an animated caption every two frames, keeping it pinned to its edge', () => {
