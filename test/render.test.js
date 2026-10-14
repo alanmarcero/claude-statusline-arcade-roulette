@@ -43,7 +43,7 @@ test('layout swings the player within three cells of its spot with each chaser b
 })
 
 test('render draws the same field whatever the context and rate limit usage', () => {
-  const field = (input) => render(input, { ...OPTIONS, frame: 4 }).split('\n').slice(1, 5)
+  const field = (input) => render(input, { ...OPTIONS, frame: 4 }).split('\n').slice(1, 6)
   const full = {
     ...INPUT,
     context_window: { used_percentage: 95, context_window_size: 1_000_000 },
@@ -53,11 +53,11 @@ test('render draws the same field whatever the context and rate limit usage', ()
   assert.deepEqual(field(full), field(INPUT))
 })
 
-test('render draws every game with all three field rows and both borders at the same width on every frame', () => {
+test('render draws every game with all four field rows and both borders at the same width on every frame', () => {
   const widths = GAMES.flatMap((game) =>
     Array.from({ length: 6 }, (_, frame) => {
-      const [, top, backdrop, sky, ground, bottom] = render(INPUT, { ...OPTIONS, game, frame }).split('\n')
-      return new Set([top, backdrop, sky, ground, bottom].map((line) => columns(line.replace(ANSI, ''))))
+      const [, top, backdrop, sky, ground, base, bottom] = render(INPUT, { ...OPTIONS, game, frame }).split('\n')
+      return new Set([top, backdrop, sky, ground, base, bottom].map((line) => columns(line.replace(ANSI, ''))))
     }),
   )
 
@@ -70,7 +70,7 @@ test('render shows the title, limits and effort while the game runs', () => {
 
   assert.match(lines[0], /^CLAUDE v2\.5\.0 +Opus 5\.5 1M context 60% left$/)
   assert.match(lines[1], /PAC-MAN/)
-  assert.equal(lines[6], 'ᗩ 7d 40% ↓3d0h  ᗣ 5h 70% ↓1h30m  xhigh')
+  assert.equal(lines[7], 'ᗩ 7d 40% ↓3d0h  ᗣ 5h 70% ↓1h30m  xhigh')
 })
 
 test('isAirborne lifts each actor for two frames of six, one actor at a time', () => {
@@ -91,15 +91,15 @@ test('render moves the player into the sky row while it hops', () => {
   assert.ok(rows(2)[1].includes(player))
 })
 
-test('render shows ten points per changed line as 1UP and the larger of it and the high score as HI', () => {
+test('render shows ten points per changed line as the score and the larger of it and the high score as the high score', () => {
   const coded = { ...INPUT, cost: { total_lines_added: 312, total_lines_removed: 41 } }
 
   const [beaten, record] = [100, 9990].map((highScore) =>
-    render(coded, { ...OPTIONS, highScore }).replace(ANSI, '').split('\n')[5],
+    render(coded, { ...OPTIONS, highScore }).replace(ANSI, '').split('\n')[6],
   )
 
-  assert.match(beaten, /^╰══ 1UP 003530 ═+ HI 003530 ══╯$/)
-  assert.match(record, /^╰══ 1UP 003530 ═+ HI 009990 ══╯$/)
+  assert.match(beaten, /^╰══ 1UP 003530 ═+ HIGH SCORE 003530 ══╯$/)
+  assert.match(record, /^╰══ 1UP 003530 ═+ HIGH SCORE 009990 ══╯$/)
 })
 
 test('render paints an actor on the background of the scenery it covers', () => {
@@ -150,9 +150,9 @@ test('render keeps the row width when an actor or the field edge covers half of 
 })
 
 test('render shows INSERT COIN between the scores while the session is idle and hides it at narrow widths', () => {
-  const border = (options) => render(INPUT, { ...OPTIONS, ...options }).replace(ANSI, '').split('\n')[5]
+  const border = (options) => render(INPUT, { ...OPTIONS, ...options }).replace(ANSI, '').split('\n')[6]
 
-  assert.match(border({ isIdle: true }), /^╰══ 1UP 000000 ═+ INSERT COIN ═+ HI 000000 ══╯$/)
+  assert.match(border({ isIdle: true }), /^╰══ 1UP 000000 ═+ INSERT COIN ═+ HIGH SCORE 000000 ══╯$/)
   assert.doesNotMatch(border({ isIdle: false }), /INSERT COIN/)
   assert.doesNotMatch(border({ isIdle: true, width: 30 }), /INSERT COIN/)
 })
@@ -186,8 +186,18 @@ test('render flashes the banner in the middle of the sky for the first frames of
   assert.ok(sky(22).includes('READY!'))
 })
 
-test('render caps the width at 70 columns on a wide terminal', () => {
-  const lines = render(INPUT, { ...OPTIONS, width: 200 }).replace(ANSI, '').split('\n').slice(1, 6)
+test('render caps the width at 90 columns on a wide terminal', () => {
+  const lines = render(INPUT, { ...OPTIONS, width: 200 }).replace(ANSI, '').split('\n').slice(1, 7)
 
-  assert.ok(lines.every((line) => columns(line) === 70))
+  assert.ok(lines.every((line) => columns(line) === 90))
+})
+
+test('render fills each game scoreboard and drops the right board when the border is narrow', () => {
+  const coded = { ...INPUT, cost: { total_lines_added: 30, total_lines_removed: 41, total_duration_ms: 25 * 60_000 } }
+  const border = (id, width) =>
+    render(coded, { ...OPTIONS, game: GAMES.find((game) => game.id === id), width }).replace(ANSI, '').split('\n')[6]
+
+  assert.match(border('tetris', 54), /^╰══ SCORE 000710 ═+ LINES 041 ══╯$/)
+  assert.match(border('mario', 54), /^╰══ MARIO 000710 ═+ TIME 375 ══╯$/)
+  assert.match(border('mortal-kombat-2', 30), /^╰══ LIU KANG 000710 ═+╯$/)
 })
