@@ -4,10 +4,11 @@ A Claude Code status line that deals each Claude session one of fifteen classic 
 
 ```
 CLAUDE v2.5.0             Opus 5.5 1M context 60% left
-╭══ DONKEY KONG ═════════════════════════════════════╮
-║    H            H         ᕗ  H            H        ║
-║ ▀╳▀▀▀╳▀◉▀╳▀▀▀╳▀ѻ▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀Ŧ▀╳ ║
-╰══ 1UP 003530 ═════════════════════════ HI 012840 ══╯
+╭══ DONKEY KONG ═════════════════════════════════════════════╮
+║ Ѫ ᛉ▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀ ║
+║    H            H        ѡ   H ᕗ          H        ѡ   H   ║
+║ ▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀ѻ▀▀◉╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀Ŧ▀╳ ║
+╰══ 1UP 003530 ══════════ INSERT COIN ══════════ HI 003530 ══╯
 ѻ 7d 40% ↓3d12h  ◉ 5h 70% ↓1h35m  xhigh
 ```
 
@@ -17,9 +18,9 @@ The games: Pac-Man, Space Invaders, Frogger, Donkey Kong, Asteroids, Centipede, 
 
 The field is an animation that runs while Claude works. It does not track usage: the player drifts back and forth, and two chasers close in on it and fall back on a fixed loop.
 
-Each game draws its own screen in 256 colors, close to the original cabinet: a black Pac-Man maze with peach pellets and a blinking power pellet, Frogger's purple bank and blue river with logs and turtles, red Donkey Kong girders under cyan ladders, Tetris stacks, a blue Super Mario Bros sky with brick and question blocks over a brick floor, Rampage buildings that turn to rubble behind the monster, a Double Dragon brick wall with a neon 雙截龍 sign over a cracked street, the Mortal Kombat II Dead Pool with hooks over bubbling acid, and the Mortal Kombat 3 subway with a train speeding past. The ground row shows the scenery the player walks on. The top row shows the game's sky (invader formations, cars, a brick wall, clouds) and scrolls at half speed for a parallax effect. An actor takes the background color of the scenery under it.
+Each game draws its own screen in 256 colors, close to the original cabinet: a black Pac-Man maze with peach pellets and a blinking power pellet, Frogger's purple bank and blue river with logs and turtles, red Donkey Kong girders under cyan ladders, Tetris stacks, a blue Super Mario Bros sky with brick and question blocks over a brick floor, Rampage buildings that turn to rubble behind the monster, a Double Dragon brick wall with a neon 雙截龍 sign over a cracked street, the Mortal Kombat II Dead Pool with hooks over bubbling acid, and the Mortal Kombat 3 subway with a train speeding past. The field has three rows. The ground row shows the scenery the player walks on. The middle row shows the game's sky (invader formations, cars, ladders, question blocks) and scrolls at half speed. The top row is a backdrop (the upper maze wall, the Frogger homes, Donkey Kong and Pauline on the top girder, clouds, the moon, a city skyline) that scrolls at quarter speed, so the scene has depth. An actor takes the background color of the scenery under it.
 
-The player and the chasers take turns to hop into the top row, the scenery scrolls left, the title shows the game's own logo colors with a white glint sweeping across it, and lights chase along the top border. Each game also animates in place: invaders swap poses as they march, Frogger traffic drives right while the water ripples and turtles dive, the Donkey Kong oil drum burns, asteroids tumble the other way, the Tron grid pulses, Tetris rows flash like a line clear, Mario's ? blocks flash and coins spin, Mortal Kombat torches flicker, and Rampage and Double Dragon windows flicker on and off. Pac-Man's ghosts turn blue and flash every twelve frames as if he ate a power pellet, a UFO crosses above the invaders, the centipede drags its body, Tron's light cycles leave light walls, Frogger trucks pull trailers, and the Asteroids ship fires its thruster. Pac-Man flashes READY!, Super Mario Bros flashes WORLD 1-1, and the Mortal Kombat games flash FIGHT! in the sky every twenty frames. In Space Invaders, Asteroids, Centipede, Super Mario Bros, all three Mortal Kombat games and Double Dragon, the player fires a shot that crosses the field three cells per frame. The animation moves one frame per second while the session works. It stops 30 seconds after the transcript last changed, so the terminal does not show idle tabs as busy.
+The player and the chasers take turns to hop into the middle row, the scenery scrolls left, the title shows the game's own logo colors with a white glint sweeping across it, and lights chase along the top border. Each game also animates in place: invaders swap poses as they march, Frogger traffic drives right while the water ripples and turtles dive, the Donkey Kong oil drum burns, asteroids tumble the other way, the Tron grid pulses, Tetris rows flash like a line clear, Mario's ? blocks flash and coins spin, Mortal Kombat torches flicker, and Rampage and Double Dragon windows flicker on and off. Pac-Man's ghosts turn blue and flash every twelve frames as if he ate a power pellet, a UFO crosses above the invaders, the centipede drags its body, Tron's light cycles leave light walls, Frogger trucks pull trailers, and the Asteroids ship fires its thruster. Pac-Man flashes READY!, Super Mario Bros flashes WORLD 1-1, and the Mortal Kombat games flash FIGHT! in the sky every twenty frames. In Space Invaders, Asteroids, Centipede, Super Mario Bros, all three Mortal Kombat games and Double Dragon, the player fires a shot that crosses the field three cells per frame. The animation moves one frame per second while the session works. It stops 30 seconds after the transcript last changed, so the terminal does not show idle tabs as busy.
 
 The bottom border shows a blinking 1UP and a score of 10 points for each line Claude added or removed in the session. HI is the best score for that game across all sessions. It is kept in `~/.claude/arcade-roulette-scores.json`, which the status line writes only when a session beats it. While the session is idle, the border shows INSERT COIN between the scores.
 
@@ -48,7 +49,7 @@ Add it to `~/.claude/settings.json`:
 ## Options
 
 - `--game <id>` locks one game: `pacman`, `invaders`, `frogger`, `donkey-kong`, `asteroids`, `centipede`, `breakout`, `tron`, `tetris`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage` or `double-dragon`.
-- `--width <n>` sets the width. The default is the terminal width minus 20 columns for the Claude Code buddy, clamped to 30 to 54.
+- `--width <n>` sets the width. The default is the terminal width minus 20 columns for the Claude Code buddy, clamped to 30 to 70.
 
 To preview every game:
 

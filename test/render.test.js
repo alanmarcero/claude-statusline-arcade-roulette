@@ -43,7 +43,7 @@ test('layout swings the player within three cells of its spot with each chaser b
 })
 
 test('render draws the same field whatever the context and rate limit usage', () => {
-  const field = (input) => render(input, { ...OPTIONS, frame: 4 }).split('\n').slice(1, 4)
+  const field = (input) => render(input, { ...OPTIONS, frame: 4 }).split('\n').slice(1, 5)
   const full = {
     ...INPUT,
     context_window: { used_percentage: 95, context_window_size: 1_000_000 },
@@ -53,11 +53,11 @@ test('render draws the same field whatever the context and rate limit usage', ()
   assert.deepEqual(field(full), field(INPUT))
 })
 
-test('render draws every game with both field rows and both borders at the same width on every frame', () => {
+test('render draws every game with all three field rows and both borders at the same width on every frame', () => {
   const widths = GAMES.flatMap((game) =>
     Array.from({ length: 6 }, (_, frame) => {
-      const [, top, sky, ground, bottom] = render(INPUT, { ...OPTIONS, game, frame }).split('\n')
-      return new Set([top, sky, ground, bottom].map((line) => columns(line.replace(ANSI, ''))))
+      const [, top, backdrop, sky, ground, bottom] = render(INPUT, { ...OPTIONS, game, frame }).split('\n')
+      return new Set([top, backdrop, sky, ground, bottom].map((line) => columns(line.replace(ANSI, ''))))
     }),
   )
 
@@ -70,7 +70,7 @@ test('render shows the title, limits and effort while the game runs', () => {
 
   assert.match(lines[0], /^CLAUDE v2\.5\.0 +Opus 5\.5 1M context 60% left$/)
   assert.match(lines[1], /PAC-MAN/)
-  assert.equal(lines[5], 'ᗩ 7d 40% ↓3d0h  ᗣ 5h 70% ↓1h30m  xhigh')
+  assert.equal(lines[6], 'ᗩ 7d 40% ↓3d0h  ᗣ 5h 70% ↓1h30m  xhigh')
 })
 
 test('isAirborne lifts each actor for two frames of six, one actor at a time', () => {
@@ -84,7 +84,7 @@ test('isAirborne lifts each actor for two frames of six, one actor at a time', (
 
 test('render moves the player into the sky row while it hops', () => {
   const player = GAMES[0].player.glyphs[0]
-  const rows = (frame) => render(INPUT, { ...OPTIONS, frame }).replace(ANSI, '').split('\n').slice(2, 4)
+  const rows = (frame) => render(INPUT, { ...OPTIONS, frame }).replace(ANSI, '').split('\n').slice(3, 5)
 
   assert.ok(rows(0)[0].includes(player))
   assert.ok(!rows(0)[1].includes(player))
@@ -95,7 +95,7 @@ test('render shows ten points per changed line as 1UP and the larger of it and t
   const coded = { ...INPUT, cost: { total_lines_added: 312, total_lines_removed: 41 } }
 
   const [beaten, record] = [100, 9990].map((highScore) =>
-    render(coded, { ...OPTIONS, highScore }).replace(ANSI, '').split('\n')[4],
+    render(coded, { ...OPTIONS, highScore }).replace(ANSI, '').split('\n')[5],
   )
 
   assert.match(beaten, /^╰══ 1UP 003530 ═+ HI 003530 ══╯$/)
@@ -106,7 +106,7 @@ test('render paints an actor on the background of the scenery it covers', () => 
   const frogger = GAMES.find((game) => game.id === 'frogger')
   const frog = `${frogger.trail.background}${frogger.player.color}${frogger.player.glyphs[1]}`
 
-  const ground = render(INPUT, { ...OPTIONS, game: frogger, frame: 3 }).split('\n')[3]
+  const ground = render(INPUT, { ...OPTIONS, game: frogger, frame: 3 }).split('\n')[4]
 
   assert.ok(ground.includes(frog))
 })
@@ -126,7 +126,7 @@ test('render fires the shot from two cells ahead of the player, three cells furt
   const shotColumn = (frame) =>
     render(INPUT, { ...OPTIONS, game: invaders, frame })
       .replace(ANSI, '')
-      .split('\n')[3]
+      .split('\n')[4]
       .indexOf(invaders.shot.glyphs[frame % invaders.shot.glyphs.length])
   // The row starts with the border and a space, so field cell n is column n + 2.
   const expected = (frame) => {
@@ -141,7 +141,7 @@ test('render fires the shot from two cells ahead of the player, three cells furt
 test('render keeps the row width when an actor or the field edge covers half of a wide glyph', () => {
   const doubleDragon = GAMES.find((game) => game.id === 'double-dragon')
   const sky = (frame, width) =>
-    render(INPUT, { ...OPTIONS, game: doubleDragon, frame, width }).replace(ANSI, '').split('\n')[2]
+    render(INPUT, { ...OPTIONS, game: doubleDragon, frame, width }).replace(ANSI, '').split('\n')[3]
 
   const rows = Array.from({ length: 60 }, (_, frame) => sky(frame, 54 - (frame % 3)))
 
@@ -150,7 +150,7 @@ test('render keeps the row width when an actor or the field edge covers half of 
 })
 
 test('render shows INSERT COIN between the scores while the session is idle and hides it at narrow widths', () => {
-  const border = (options) => render(INPUT, { ...OPTIONS, ...options }).replace(ANSI, '').split('\n')[4]
+  const border = (options) => render(INPUT, { ...OPTIONS, ...options }).replace(ANSI, '').split('\n')[5]
 
   assert.match(border({ isIdle: true }), /^╰══ 1UP 000000 ═+ INSERT COIN ═+ HI 000000 ══╯$/)
   assert.doesNotMatch(border({ isIdle: false }), /INSERT COIN/)
@@ -163,7 +163,7 @@ test('render drags a chaser tail along the ground behind it', () => {
   const scene = layout(50, 3)
   const leader = scene.chasers.find((chaser) => chaser.key === 'fiveHour').position
 
-  const ground = render(INPUT, { ...OPTIONS, game: tron, frame: 3 }).split('\n')[3]
+  const ground = render(INPUT, { ...OPTIONS, game: tron, frame: 3 }).split('\n')[4]
 
   assert.equal(ground.split(`${color}${glyphs[0]}`).length - 1, length)
   assert.ok(leader > length)
@@ -172,16 +172,22 @@ test('render drags a chaser tail along the ground behind it', () => {
 test('render swaps in the scared sprite for every chaser during the scare frames only', () => {
   const pacman = GAMES.find((game) => game.id === 'pacman')
   const scaredGhost = `${pacman.scared.color[0]}${pacman.scared.glyphs[0]}`
-  const ground = (frame) => render(INPUT, { ...OPTIONS, game: pacman, frame }).split('\n')[3]
+  const ground = (frame) => render(INPUT, { ...OPTIONS, game: pacman, frame }).split('\n')[4]
 
   assert.equal(ground(0).split(scaredGhost).length - 1, 2)
   assert.ok(!ground(6).includes(pacman.scared.color[0]))
 })
 
 test('render flashes the banner in the middle of the sky for the first frames of each cycle', () => {
-  const sky = (frame) => render(INPUT, { ...OPTIONS, frame }).replace(ANSI, '').split('\n')[2]
+  const sky = (frame) => render(INPUT, { ...OPTIONS, frame }).replace(ANSI, '').split('\n')[3]
 
   assert.equal(sky(1).indexOf('READY!'), 2 + Math.floor((50 - 'READY!'.length) / 2))
   assert.ok(!sky(5).includes('READY!'))
   assert.ok(sky(22).includes('READY!'))
+})
+
+test('render caps the width at 70 columns on a wide terminal', () => {
+  const lines = render(INPUT, { ...OPTIONS, width: 200 }).replace(ANSI, '').split('\n').slice(1, 6)
+
+  assert.ok(lines.every((line) => columns(line) === 70))
 })
