@@ -245,3 +245,12 @@ test('render twinkles stars in the empty backdrop cells of a starry game only', 
   assert.notEqual(backdrop('double-dragon', 0), backdrop('double-dragon', 2))
   assert.ok(!backdrop('tron', 0).includes('·'))
 })
+
+test('render keeps every game at the minimum width, dropping a title that does not fit', () => {
+  const tmnt = GAMES.find((game) => game.id === 'tmnt')
+  const frame = (game) => render(INPUT, { ...OPTIONS, game, width: 30 }).replace(ANSI, '').split('\n').slice(1, 7)
+
+  assert.ok(GAMES.every((game) => frame(game).every((line) => columns(line) === 30)))
+  assert.ok(!frame(tmnt)[0].includes('TURTLES'))
+  assert.ok(render(INPUT, { ...OPTIONS, game: tmnt }).replace(ANSI, '').includes('NINJA TURTLES'))
+})

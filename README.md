@@ -1,6 +1,6 @@
 # claude-statusline-arcade-roulette
 
-A Claude Code status line that deals each Claude session one of fifteen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
+A Claude Code status line that deals each Claude session one of sixteen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
 
 ```
 CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
@@ -13,7 +13,7 @@ CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
 ѻ 7d 40% ↓3d12h  ◉ 5h 70% ↓1h35m  xhigh
 ```
 
-The games: Pac-Man, Space Invaders, Frogger, Donkey Kong, Asteroids, Centipede, Breakout, Tron, Tetris, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage and Double Dragon.
+The games: Pac-Man, Space Invaders, Frogger, Donkey Kong, Asteroids, Centipede, Breakout, Tron, Tetris, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon and Teenage Mutant Ninja Turtles.
 
 ## How to read it
 
@@ -28,9 +28,9 @@ Each game draws its own screen in 256 colors, close to the original cabinet. The
 | Row | Scrolls at | Shows |
 |---|---|---|
 | Backdrop | quarter speed | the far scenery: the upper maze wall, the Frogger homes, Donkey Kong and Pauline on the top girder, the top bricks, clouds, the moon, a city skyline |
-| Sky | half speed | invader formations, traffic, ladders, question blocks, a passing subway train. The player and chasers hop into this row. |
+| Sky | half speed | invader formations, traffic, ladders, question blocks, a passing subway train, a burning building. The player and chasers hop into this row. |
 | Ground | full speed | the scenery the player walks on: pellets, the river, girders, the brick floor, the Dead Pool walkway |
-| Base | full speed | the foreground: the lower maze wall, a second traffic lane, Mario's brick underground, bubbling acid, the subway platform edge, street markings |
+| Base | full speed | the foreground: the lower maze wall, a second traffic lane, Mario's brick underground, bubbling acid, the subway platform edge, street markings, the sewer under the turtles' street |
 
 A character takes the background color of the scenery under it. Chinese characters, such as the neon 雙截龍 sign in Double Dragon, take two columns.
 
@@ -42,7 +42,7 @@ A character takes the background color of the scenery under it. Chinese characte
 - Chasers can drag a tail: the centipede's body, Tron's light walls, a Frogger truck's trailer, a comet trail behind the Breakout ball. The Asteroids ship fires its thruster.
 - Tron's backdrop shows the MCP cone's rotating rainbow shield, and Bit flips between YES and NO in the top corner.
 - Pac-Man flashes READY!, Super Mario Bros flashes WORLD 1-1, and the Mortal Kombat games flash FIGHT! every twenty frames.
-- In Space Invaders, Asteroids, Centipede, Super Mario Bros, the three Mortal Kombat games and Double Dragon, the player fires a shot that crosses the field three cells per frame.
+- In Space Invaders, Asteroids, Centipede, Super Mario Bros, the three Mortal Kombat games, Double Dragon and Teenage Mutant Ninja Turtles, the player fires a shot that crosses the field three cells per frame.
 - While the session is idle, the bottom border shows INSERT COIN.
 - The base row carries fixed captions like the bottom of an arcade screen: spare lives, Pac-Man's cherries, `CREDIT 00` in Space Invaders, the Frogger TIME bar, `L=01` in Donkey Kong, Mario's coin count and the next Tetris piece. The Frogger TIME bar drains, the Mortal Kombat games show both fighters' health bars in the top corners, draining as the fight goes on, Rampage shows each monster's damage meter in its color, and Double Dragon shows a draining health bar.
 - Stars twinkle in the empty night backdrop of Space Invaders, Asteroids, Centipede, Mortal Kombat and Double Dragon.
@@ -56,6 +56,7 @@ Each session also gets small variations of its game, picked from a hash of the s
 | Mortal Kombat, II and 3 | your fighter and the rival from that game's roster (names on the scoreboard and their colors), the boss's color, and the banner (FIGHT!, ROUND 1, ROUND 2 or ROUND 3) |
 | Rampage | George, Lizzie or Ralph, and the rival monster |
 | Double Dragon | Billy (1P, blue) or Jimmy (2P, red), and the enemy's color |
+| Teenage Mutant Ninja Turtles | Leonardo, Raphael, Michelangelo or Donatello in their mask color, each throwing their own weapon (a spinning katana, a sai, nunchucks or a bo), a partner turtle on the scoreboard, the boss behind the Foot Soldiers (Shredder, Bebop, Rocksteady or Krang), and the banner (COWABUNGA! or PIZZA TIME) |
 | Super Mario Bros | Mario or Luigi, the WORLD number and the coin count |
 | Pac-Man | which two ghosts chase, the fruit color and the spare lives |
 | Space Invaders, Frogger, Donkey Kong, Asteroids | spare lives, the credit count and the Donkey Kong level |
@@ -85,6 +86,7 @@ The bottom border shows a scoreboard in the style of each game. The score is 10 
 | Mortal Kombat 3 | `SUB-ZERO` | `SEKTOR` |
 | Rampage | `GEORGE` | `LIZZIE` |
 | Double Dragon | `1P` | `HI` |
+| Teenage Mutant Ninja Turtles | your turtle's name | the partner turtle's name |
 
 When the border is too narrow for both sides, the right side goes first.
 
@@ -110,13 +112,13 @@ Add it to `~/.claude/settings.json`:
 
 ## Options
 
-- `--game <id>` locks one game: `pacman`, `invaders`, `frogger`, `donkey-kong`, `asteroids`, `centipede`, `breakout`, `tron`, `tetris`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage` or `double-dragon`.
+- `--game <id>` locks one game: `pacman`, `invaders`, `frogger`, `donkey-kong`, `asteroids`, `centipede`, `breakout`, `tron`, `tetris`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon` or `tmnt`.
 - `--width <n>` sets the width. The default is the terminal width minus 20 columns for the Claude Code buddy, clamped to 30 to 90.
 
 To preview every game:
 
 ```sh
-for game in pacman invaders frogger donkey-kong asteroids centipede breakout tron tetris mario mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon; do
+for game in pacman invaders frogger donkey-kong asteroids centipede breakout tron tetris mario mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt; do
   echo '{"context_window":{"used_percentage":40},"rate_limits":{"five_hour":{"used_percentage":30},"seven_day":{"used_percentage":60}}}' \
     | node arcade-roulette.js --game "$game"
 done
