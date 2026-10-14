@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { GAMES } from '../lib/games.js'
-import { formatCountdown, isAirborne, layout, pickGame, render } from '../lib/render.js'
+import { formatCountdown, isAirborne, layout, pickGame, render, tile } from '../lib/render.js'
 
 const ANSI = /\x1b\[[0-9;]*m/g
 const NOW = 1_800_000_000
@@ -123,4 +123,27 @@ test('render paints an actor on the background of the scenery it covers', () => 
   const ground = render(INPUT, { ...OPTIONS, game: frogger, frame: 3 }).split('\n')[3]
 
   assert.ok(ground.includes(frog))
+})
+
+test('tile steps a multi-character glyph and a color list by frame, offset by the cell index', () => {
+  const water = { glyphs: ['≈~', '≈~'], colors: [['a', 'b', 'c'], ['a', 'b', 'c']] }
+
+  const [first, next, neighbor] = [tile(water, 0, 0), tile(water, 0, 1), tile(water, 1, 0)]
+
+  assert.deepEqual([first.glyph, first.color], ['≈', 'a'])
+  assert.deepEqual([next.glyph, next.color], ['~', 'b'])
+  assert.deepEqual([neighbor.glyph, neighbor.color], ['~', 'b'])
+})
+
+test('render fires the shot ahead of the player three cells per frame and holds fire at game over', () => {
+  const invaders = GAMES.find((game) => game.id === 'invaders')
+  const exhausted = { ...INPUT, rate_limits: { five_hour: { used_percentage: 100 } } }
+  const shotColumn = (input, frame) =>
+    render(input, { ...OPTIONS, game: invaders, frame })
+      .replace(ANSI, '')
+      .split('\n')[3]
+      .indexOf(invaders.shot.glyphs[frame % invaders.shot.glyphs.length])
+
+  assert.equal(shotColumn(INPUT, 3) - shotColumn(INPUT, 2), 3)
+  assert.equal(shotColumn(exhausted, 2), -1)
 })
