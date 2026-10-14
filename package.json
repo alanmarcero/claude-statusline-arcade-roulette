@@ -1,0 +1,10 @@
+{
+  "name": "arcade-roulette",
+  "version": "1.0.0",
+  "description": "Claude Code status line that deals each session one of ten classic arcade games",
+  "type": "module",
+  "bin": { "arcade-roulette": "arcade-roulette.js" },
+  "scripts": { "test": "node --test" },
+  "engines": { "node": ">=18.3" },
+  "license": "MIT"
+}
