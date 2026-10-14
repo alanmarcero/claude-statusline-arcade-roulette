@@ -210,3 +210,12 @@ test('render pins the caption one cell in from each edge of the base row', () =>
   assert.match(base(0), /^║ ▔3 ᐃᐃ.*CREDIT 00▔ ║$/)
   assert.match(base(7), /^║ ▔3 ᐃᐃ.*CREDIT 00▔ ║$/)
 })
+
+test('render steps an animated caption every two frames, keeping it pinned to its edge', () => {
+  const mortalKombat = GAMES.find((game) => game.id === 'mortal-kombat-3')
+  const backdrop = (frame) => render(INPUT, { ...OPTIONS, game: mortalKombat, frame }).replace(ANSI, '').split('\n')[2]
+
+  assert.ok(backdrop(0).startsWith(`║ ═${'▬'.repeat(10)}═`))
+  assert.ok(backdrop(2).startsWith(`║ ═${'▬'.repeat(9)} ═`))
+  assert.ok(backdrop(2).endsWith(` ${'▬'.repeat(9)}═ ║`))
+})
