@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process'
-import { readFileSync, statSync } from 'node:fs'
+import { readFileSync, statSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 import { GAMES } from './lib/games.js'
-import { pickGame, render } from './lib/render.js'
+import { pickGame, render, scoreOf } from './lib/render.js'
 
 // Room for the Claude Code buddy sprite to the right of the status line.
 const BUDDY_RESERVE = 20
@@ -14,7 +14,9 @@ const IDLE_SECONDS = 30
 
 const { values } = parseArgs({ options: { game: { type: 'string' }, width: { type: 'string' } } })
 
-const [input, settings] = [0, join(homedir(), '.claude', 'settings.json')].map((source) => {
+const HIGH_SCORES_PATH = join(homedir(), '.claude', 'arcade-roulette-scores.json')
+
+const [input, settings, highScores] = [0, join(homedir(), '.claude', 'settings.json'), HIGH_SCORES_PATH].map((source) => {
   try {
     return JSON.parse(readFileSync(source, 'utf8'))
   } catch {
@@ -28,6 +30,15 @@ const columns = Number(ttySize.split(' ')[1]) || FALLBACK_COLUMNS
 const game = GAMES.find((candidate) => candidate.id === values.game) ?? pickGame(input.session_id ?? process.ppid)
 
 const nowSeconds = Math.floor(Date.now() / 1000)
+
+// Each game keeps its own high score. The file is written only when a session beats it.
+const highScore = highScores[game.id] ?? 0
+const score = scoreOf(input)
+if (score > highScore) {
+  try {
+    writeFileSync(HIGH_SCORES_PATH, JSON.stringify({ ...highScores, [game.id]: score }))
+  } catch {}
+}
 
 // Stop the animation when the transcript has not changed for IDLE_SECONDS.
 // If the status line changes every second, the terminal shows each idle tab as busy.
@@ -48,5 +59,6 @@ console.log(
     frame,
     nowSeconds,
     effort: settings.effortLevel,
+    highScore,
   }),
 )

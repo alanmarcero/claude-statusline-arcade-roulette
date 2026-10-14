@@ -105,13 +105,15 @@ test('render moves the player into the sky row while it hops and keeps it ground
   assert.ok(!rows(exhausted, 0)[0].includes(GAMES[0].chasers.fiveHour.glyphs[0]))
 })
 
-test('render shows ten points per changed line as the 1UP score in the bottom border', () => {
+test('render shows ten points per changed line as 1UP and the larger of it and the high score as HI', () => {
   const coded = { ...INPUT, cost: { total_lines_added: 312, total_lines_removed: 41 } }
 
-  const [plain, scored] = [INPUT, coded].map((input) => render(input, OPTIONS).replace(ANSI, '').split('\n')[4])
+  const [beaten, record] = [100, 9990].map((highScore) =>
+    render(coded, { ...OPTIONS, highScore }).replace(ANSI, '').split('\n')[4],
+  )
 
-  assert.match(plain, /^╰══ 1UP 000000 ═+╯$/)
-  assert.match(scored, /^╰══ 1UP 003530 ═+╯$/)
+  assert.match(beaten, /^╰══ 1UP 003530 ═+ HI 003530 ══╯$/)
+  assert.match(record, /^╰══ 1UP 003530 ═+ HI 009990 ══╯$/)
 })
 
 test('render paints an actor on the background of the scenery it covers', () => {
