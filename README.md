@@ -1,4 +1,4 @@
-# arcade-roulette
+# claude-statusline-arcade-roulette
 
 A Claude Code status line that deals each Claude session one of ten classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
 
@@ -26,7 +26,7 @@ When a chaser reaches 100%, it lands on the player and the footer shows GAME OVE
 Requires Node 18.3 or later. No dependencies.
 
 ```sh
-git clone https://github.com/alanmarcero/arcade-roulette.git ~/Development/arcade-roulette
+git clone https://github.com/alanmarcero/claude-statusline-arcade-roulette.git ~/Development/claude-statusline-arcade-roulette
 ```
 
 Add it to `~/.claude/settings.json`:
@@ -34,7 +34,7 @@ Add it to `~/.claude/settings.json`:
 ```json
 "statusLine": {
   "type": "command",
-  "command": "node ~/Development/arcade-roulette/arcade-roulette.js"
+  "command": "node ~/Development/claude-statusline-arcade-roulette/arcade-roulette.js"
 }
 ```
 
