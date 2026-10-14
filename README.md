@@ -39,7 +39,8 @@ A character takes the background color of the scenery under it. Chinese characte
 - The title shows the game's own logo colors, with a white glint sweeping across it, and lights chase along the top border.
 - Scenery animates in place: invaders swap poses as they march, water ripples and turtles dive, the oil drum burns, asteroids tumble, the Tron grid pulses, Tetris rows flash like a line clear, ? blocks flash and coins spin, torches and windows flicker.
 - Pac-Man's ghosts turn blue and flash for four of every twelve frames, as if he ate a power pellet.
-- Chasers can drag a tail: the centipede's body, Tron's light walls, a Frogger truck's trailer. The Asteroids ship fires its thruster.
+- Chasers can drag a tail: the centipede's body, Tron's light walls, a Frogger truck's trailer, a comet trail behind the Breakout ball. The Asteroids ship fires its thruster.
+- Tron's backdrop shows the MCP cone's rotating rainbow shield, and Bit flips between YES and NO in the top corner.
 - Pac-Man flashes READY!, Super Mario Bros flashes WORLD 1-1, and the Mortal Kombat games flash FIGHT! every twenty frames.
 - In Space Invaders, Asteroids, Centipede, Super Mario Bros, the three Mortal Kombat games and Double Dragon, the player fires a shot that crosses the field three cells per frame.
 - While the session is idle, the bottom border shows INSERT COIN.
