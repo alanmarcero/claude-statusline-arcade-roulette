@@ -158,12 +158,12 @@ test('render shows INSERT COIN between the scores while the session is idle and 
 })
 
 test('render drags a chaser tail along the ground behind it', () => {
-  const tron = GAMES.find((game) => game.id === 'tron')
-  const { glyphs, color, length } = tron.chasers.fiveHour.tail
+  const frogger = GAMES.find((game) => game.id === 'frogger')
+  const { glyphs, color, length } = frogger.chasers.fiveHour.tail
   const scene = layout(50, 3)
   const leader = scene.chasers.find((chaser) => chaser.key === 'fiveHour').position
 
-  const ground = render(INPUT, { ...OPTIONS, game: tron, frame: 3 }).split('\n')[4]
+  const ground = render(INPUT, { ...OPTIONS, game: frogger, frame: 3 }).split('\n')[4]
 
   assert.equal(ground.split(`${color}${glyphs[0]}`).length - 1, length)
   assert.ok(leader > length)
@@ -243,7 +243,7 @@ test('render twinkles stars in the empty backdrop cells of a starry game only', 
 
   assert.ok(backdrop('double-dragon', 0).includes('·'))
   assert.notEqual(backdrop('double-dragon', 0), backdrop('double-dragon', 2))
-  assert.ok(!backdrop('tron', 0).includes('·'))
+  assert.ok(!backdrop('breakout', 0).includes('·'))
 })
 
 test('render keeps every game at the minimum width, dropping a title that does not fit', () => {

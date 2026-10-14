@@ -1,6 +1,6 @@
 # claude-statusline-arcade-roulette
 
-A Claude Code status line that deals each Claude session one of sixteen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
+A Claude Code status line that deals each Claude session one of fifteen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
 
 ```
 CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
@@ -13,7 +13,7 @@ CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
 ѻ 7d 40% ↓3d12h  ◉ 5h 70% ↓1h35m  xhigh
 ```
 
-The games: Pac-Man, Space Invaders, Frogger, Donkey Kong, Asteroids, Centipede, Breakout, Tron, Tetris, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon and Teenage Mutant Ninja Turtles.
+The games: Pac-Man, Space Invaders, Frogger, Donkey Kong, Asteroids, Centipede, Breakout, Tetris, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon and Teenage Mutant Ninja Turtles.
 
 ## How to read it
 
@@ -37,10 +37,9 @@ A character takes the background color of the scenery under it. Chinese characte
 ### The animation
 
 - The title shows the game's own logo colors, with a white glint sweeping across it, and lights chase along the top border.
-- Scenery animates in place: invaders swap poses as they march, water ripples and turtles dive, the oil drum burns, asteroids tumble, the Tron grid pulses, Tetris rows flash like a line clear, ? blocks flash and coins spin, torches and windows flicker.
+- Scenery animates in place: invaders swap poses as they march, water ripples and turtles dive, the oil drum burns, asteroids tumble, Tetris rows flash like a line clear, ? blocks flash and coins spin, torches and windows flicker.
 - Pac-Man's ghosts turn blue and flash for four of every twelve frames, as if he ate a power pellet.
-- Chasers can drag a tail: the centipede's body, Tron's light walls, a Frogger truck's trailer, a comet trail behind the Breakout ball. The Asteroids ship fires its thruster.
-- Tron's backdrop shows the MCP cone's rotating rainbow shield, and Bit flips between YES and NO in the top corner.
+- Chasers can drag a tail: the centipede's body, a Frogger truck's trailer, a comet trail behind the Breakout ball. The Asteroids ship fires its thruster.
 - Pac-Man flashes READY!, Super Mario Bros flashes WORLD 1-1, and the Mortal Kombat games flash FIGHT! every twenty frames.
 - In Space Invaders, Asteroids, Centipede, Super Mario Bros, the three Mortal Kombat games, Double Dragon and Teenage Mutant Ninja Turtles, the player fires a shot that crosses the field three cells per frame.
 - While the session is idle, the bottom border shows INSERT COIN.
@@ -62,7 +61,6 @@ Each session also gets small variations of its game, picked from a hash of the s
 | Pac-Man | which two ghosts chase, the fruit color and the spare lives |
 | Space Invaders, Frogger, Donkey Kong, Asteroids | spare lives, the credit count and the Donkey Kong level |
 | Centipede | the mushroom colors of the wave |
-| Tron | the enemy light cycle colors |
 | Tetris | the NEXT piece |
 | Breakout | the ball number |
 
@@ -79,7 +77,6 @@ The bottom border shows a scoreboard in the style of each game. The score is 10 
 | Asteroids | the score | the high score |
 | Centipede | the score and two lives | the high score |
 | Breakout | a three-digit score | `BALL 1` |
-| Tron | `SCORE` | `LEVEL`, named after the arcade levels (RPG, COBOL, BASIC and so on), one level per 100 changed lines |
 | Tetris | `SCORE` | `LINES`, the lines Claude removed |
 | Super Mario Bros | `MARIO` | `TIME`, which starts at 400 and loses one per minute of the session |
 | Mortal Kombat | `SCORPION` | `SUB-ZERO` |
@@ -113,13 +110,13 @@ Add it to `~/.claude/settings.json`:
 
 ## Options
 
-- `--game <id>` locks one game: `pacman`, `invaders`, `frogger`, `donkey-kong`, `asteroids`, `centipede`, `breakout`, `tron`, `tetris`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon` or `tmnt`.
+- `--game <id>` locks one game: `pacman`, `invaders`, `frogger`, `donkey-kong`, `asteroids`, `centipede`, `breakout`, `tetris`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon` or `tmnt`.
 - `--width <n>` sets the width. The default is the terminal width minus 20 columns for the Claude Code buddy, clamped to 30 to 90.
 
 To preview every game:
 
 ```sh
-for game in pacman invaders frogger donkey-kong asteroids centipede breakout tron tetris mario mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt; do
+for game in pacman invaders frogger donkey-kong asteroids centipede breakout tetris mario mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt; do
   echo '{"context_window":{"used_percentage":40},"rate_limits":{"five_hour":{"used_percentage":30},"seven_day":{"used_percentage":60}}}' \
     | node arcade-roulette.js --game "$game"
 done
