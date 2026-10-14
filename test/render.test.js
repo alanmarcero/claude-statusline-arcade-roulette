@@ -16,7 +16,7 @@ const INPUT = {
 }
 const OPTIONS = { game: GAMES[0], width: 54, frame: 0, nowSeconds: NOW, effort: 'xhigh' }
 
-test('pickGame returns the same game for the same session and reaches all ten games', () => {
+test('pickGame returns the same game for the same session and reaches every game', () => {
   const picked = new Set(Array.from({ length: 200 }, (_, index) => pickGame(`session-${index}`).id))
 
   assert.equal(pickGame('session-a'), pickGame('session-a'))
@@ -65,7 +65,7 @@ test('render draws every game with both field rows and both borders at the same 
     }),
   )
 
-  assert.equal(widths.length, 60)
+  assert.equal(widths.length, GAMES.length * 6)
   assert.ok(widths.every((lineWidths) => lineWidths.size === 1 && lineWidths.has(54)))
 })
 

@@ -1,6 +1,6 @@
 # claude-statusline-arcade-roulette
 
-A Claude Code status line that deals each Claude session one of ten classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
+A Claude Code status line that deals each Claude session one of thirteen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
 
 ```
 CLAUDE v2.5.0             Opus 5.5 1M context 60% left
@@ -11,7 +11,7 @@ CLAUDE v2.5.0             Opus 5.5 1M context 60% left
 ѻ 7d 40% ↓3d12h  ◉ 5h 70% ↓1h35m  xhigh
 ```
 
-The games: Pac-Man, Space Invaders, Frogger, Donkey Kong, Asteroids, Dig Dug, Centipede, Breakout, Tron and Q*bert.
+The games: Pac-Man, Space Invaders, Frogger, Donkey Kong, Asteroids, Dig Dug, Centipede, Breakout, Tron, Q*bert, Tetris, Super Mario Bros and Mortal Kombat.
 
 ## How to read it
 
@@ -46,13 +46,13 @@ Add it to `~/.claude/settings.json`:
 
 ## Options
 
-- `--game <id>` locks one game: `pacman`, `invaders`, `frogger`, `donkey-kong`, `asteroids`, `dig-dug`, `centipede`, `breakout`, `tron` or `qbert`.
+- `--game <id>` locks one game: `pacman`, `invaders`, `frogger`, `donkey-kong`, `asteroids`, `dig-dug`, `centipede`, `breakout`, `tron`, `qbert`, `tetris`, `mario` or `mortal-kombat`.
 - `--width <n>` sets the width. The default is the terminal width minus 20 columns for the Claude Code buddy, clamped to 30 to 54.
 
 To preview every game:
 
 ```sh
-for game in pacman invaders frogger donkey-kong asteroids dig-dug centipede breakout tron qbert; do
+for game in pacman invaders frogger donkey-kong asteroids dig-dug centipede breakout tron qbert tetris mario mortal-kombat; do
   echo '{"context_window":{"used_percentage":40},"rate_limits":{"five_hour":{"used_percentage":30},"seven_day":{"used_percentage":60}}}' \
     | node arcade-roulette.js --game "$game"
 done

@@ -31,11 +31,12 @@ const nowSeconds = Math.floor(Date.now() / 1000)
 
 // Stop the animation when the transcript has not changed for IDLE_SECONDS.
 // If the status line changes every second, the terminal shows each idle tab as busy.
+// A new session has no transcript file yet, so it is idle.
 const lastActivitySeconds = (() => {
   try {
     return Math.floor(statSync(input.transcript_path).mtimeMs / 1000)
   } catch {
-    return nowSeconds
+    return 0
   }
 })()
 const frame = Math.min(nowSeconds, lastActivitySeconds + IDLE_SECONDS)
