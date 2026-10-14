@@ -5,7 +5,7 @@ import { homedir } from 'node:os'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 import { GAMES } from './lib/games.js'
-import { pickGame, render, scoreOf } from './lib/render.js'
+import { customize, pickGame, render, scoreOf } from './lib/render.js'
 
 // Room for the Claude Code buddy sprite to the right of the status line.
 const BUDDY_RESERVE = 20
@@ -27,7 +27,8 @@ const ttySize = spawnSync('sh', ['-c', 'stty size < /dev/tty'], { encoding: 'utf
 const columns = Number(ttySize.split(' ')[1]) || FALLBACK_COLUMNS
 
 // Claude Code sends one session_id per instance, so each instance keeps its game across renders.
-const game = GAMES.find((candidate) => candidate.id === values.game) ?? pickGame(input.session_id ?? process.ppid)
+const sessionId = input.session_id ?? process.ppid
+const game = customize(GAMES.find((candidate) => candidate.id === values.game) ?? pickGame(sessionId), sessionId)
 
 const nowSeconds = Math.floor(Date.now() / 1000)
 

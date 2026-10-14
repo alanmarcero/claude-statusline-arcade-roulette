@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { GAMES, WIDE } from '../lib/games.js'
-import { formatCountdown, isAirborne, layout, pickGame, render, tile } from '../lib/render.js'
+import { customize, formatCountdown, isAirborne, layout, pickGame, render, tile } from '../lib/render.js'
 
 const ANSI = /\x1b\[[0-9;]*m/g
 const WIDE_ALL = new RegExp(WIDE, 'g')
@@ -218,4 +218,21 @@ test('render steps an animated caption every two frames, keeping it pinned to it
   assert.ok(backdrop(0).startsWith(`║ ═${'▬'.repeat(10)}═`))
   assert.ok(backdrop(2).startsWith(`║ ═${'▬'.repeat(9)} ═`))
   assert.ok(backdrop(2).endsWith(` ${'▬'.repeat(9)}═ ║`))
+})
+
+test('customize gives every game a variant that a session keeps and other sessions change', () => {
+  const variants = (game) =>
+    new Set(Array.from({ length: 40 }, (_, index) => render(INPUT, { ...OPTIONS, game: customize(game, `session-${index}`) })))
+
+  assert.ok(GAMES.every((game) => typeof game.vary === 'function'))
+  assert.deepEqual(customize(GAMES[10], 'session-a'), customize(GAMES[10], 'session-a'))
+  assert.ok(GAMES.every((game) => variants(game).size > 1))
+})
+
+test('customize deals a Mortal Kombat II hero and a different rival onto the scoreboard', () => {
+  const mortalKombat = GAMES.find((game) => game.id === 'mortal-kombat-2')
+  const boards = Array.from({ length: 40 }, (_, index) => customize(mortalKombat, `session-${index}`).scoreboard)
+
+  assert.ok(boards.every(({ left, right }) => left.split(' {')[0] !== right.split(' {')[0]))
+  assert.ok(new Set(boards.map(({ left }) => left)).size > 3)
 })

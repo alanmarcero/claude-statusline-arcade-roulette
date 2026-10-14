@@ -45,6 +45,23 @@ A character takes the background color of the scenery under it. Chinese characte
 - While the session is idle, the bottom border shows INSERT COIN.
 - The base row carries fixed captions like the bottom of an arcade screen: spare lives, Pac-Man's cherries, `CREDIT 00` in Space Invaders, the Frogger TIME bar, `L=01` in Donkey Kong, Mario's coin count and the next Tetris piece. The Frogger TIME bar drains, and the Mortal Kombat games show both fighters' health bars in the top corners, draining as the fight goes on.
 
+### Per-session variety
+
+Each session also gets small variations of its game, picked from a hash of the session ID. A session keeps the same picks for its whole life, and a new session rolls new ones.
+
+| Game | What varies |
+|---|---|
+| Mortal Kombat, II and 3 | your fighter and the rival from that game's roster (names on the scoreboard and their colors), the boss's color, and the banner (FIGHT!, ROUND 1, ROUND 2 or ROUND 3) |
+| Rampage | George, Lizzie or Ralph, and the rival monster |
+| Double Dragon | Billy (1P, blue) or Jimmy (2P, red), and the enemy's color |
+| Super Mario Bros | Mario or Luigi, the WORLD number and the coin count |
+| Pac-Man | which two ghosts chase, the fruit color and the spare lives |
+| Space Invaders, Frogger, Donkey Kong, Asteroids | spare lives, the credit count and the Donkey Kong level |
+| Centipede | the mushroom colors of the wave |
+| Tron | the enemy light cycle colors |
+| Tetris | the NEXT piece |
+| Breakout | the ball number |
+
 ### The scoreboard
 
 The bottom border shows a scoreboard in the style of each game. The score is 10 points for each line Claude added or removed in the session. The high score is the best score for that game across all sessions. It is kept in `~/.claude/arcade-roulette-scores.json`, which the status line writes only when a session beats it.
