@@ -5,12 +5,12 @@ A Claude Code status line that deals each Claude session one of fifteen classic 
 ```
 CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
 ╭══ MS. PAC-MAN ═════════════════════════════════════════════╮
-║ ▄1600▄▄▄▄▄▄▄█ᗣ━ᗩ█▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄█ᗣ ║
-║ ▐██████▌·· ··▐██▌····●··▐███▌··ᗧ··▐██████▌·· ··▐██▌····●·· ║
+║ ▖1600▄▄▄▄▄▄▄█ᗣ━ᗩ█▄▄▄▄▄▄▄▄▄▖   ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▖ ₒᘛ▗▄▄▄▄▄▄▄ƨᗣ ║
+║ ▐██████▌·· ··▐██▌··ᗤ·· ··▐████▌ᗧ···●··▐███▌··ꝏ··▐██████▌·· ║
 ║                      ᗩ  ᗣ     ⋈ ······· ···············ƨ·· ║
-║ ▀ᗧᗧ▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀▀▀ƨ▀ ║
+║ ▀ᗧᗧ▀▀▀▀▀▀▀▘   ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘   ▝▀©1981 MIDWAY▀ ║
 ╰══ 1UP 003530 ══════ INSERT COIN ══════ HIGH SCORE 003530 ══╯
-ѻ 7d 40% ↓3d12h  ◉ 5h 70% ↓1h35m  xhigh
+ᗩ 7d 40% ↓3d12h  ᗣ 5h 70% ↓1h35m
 ```
 
 The games: Pac-Man, Space Invaders, Frogger, Ms. Pac-Man, Asteroids, Centipede, Breakout, Tetris, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon and Teenage Mutant Ninja Turtles.
@@ -29,7 +29,7 @@ Each game draws its own screen in 256 colors, close to the original cabinet. The
 |---|---|---|
 | Backdrop | quarter speed | the far scenery: the upper maze wall, the Frogger homes, the Ms. Pac-Man ghost house, the top bricks, clouds, the moon, a city skyline |
 | Sky | half speed | invader formations, traffic, ladders, question blocks, a passing subway train, a burning building. The player and chasers hop into this row. |
-| Ground | full speed | the scenery the player walks on: pellets, the river, the brick floor, the Dead Pool walkway |
+| Ground | full speed | the scenery the player walks on: pellets, the river, hills and pipes, bridges, the street |
 | Base | full speed | the foreground: the lower maze wall, a second traffic lane, Mario's brick underground, bubbling acid, the subway platform edge, street markings, the sewer under the turtles' street |
 
 A character takes the background color of the scenery under it. Chinese characters, such as the neon 雙截龍 sign in Double Dragon, take two columns.
@@ -37,15 +37,30 @@ A character takes the background color of the scenery under it. Chinese characte
 ### The animation
 
 - The title shows the game's own logo colors, with a white glint sweeping across it, and lights chase along the top border.
-- Scenery animates in place: invaders swap poses as they march, water ripples and turtles dive, asteroids tumble, Tetris rows flash like a line clear, ? blocks flash and coins spin, torches and windows flicker.
-- Pac-Man's ghosts turn blue and flash for four of every twelve frames, as if he ate a power pellet.
-- Chasers can drag a tail: the centipede's body, a Frogger truck's trailer, a comet trail behind the Breakout ball. The Asteroids ship fires its thruster.
-- Pac-Man flashes READY!, Super Mario Bros flashes WORLD 1-1, and the Mortal Kombat games flash FIGHT! every twenty frames.
-- In Space Invaders, Asteroids, Centipede, Super Mario Bros, the three Mortal Kombat games, Double Dragon and Teenage Mutant Ninja Turtles, the player fires a shot that crosses the field three cells per frame.
+- Scenery animates in place, and actors can drag tails, fire shots, flash banners in the sky, and turn scared or stunned for part of each cycle.
+- Captions sit in the corners of the top and bottom rows, like the lives, credits, health bars and timers around an arcade screen. Some of them count down or drain.
+- Stars twinkle in the empty backdrop of the night scenes.
 - While the session is idle, the bottom border shows INSERT COIN.
-- The base row carries fixed captions like the bottom of an arcade screen: spare lives, Pac-Man's cherries, `CREDIT 00` in Space Invaders, the Frogger TIME bar, Mario's coin count and the next Tetris piece. The Frogger TIME bar drains, the Mortal Kombat games show both fighters' health bars in the top corners, draining as the fight goes on, Rampage shows each monster's damage meter in its color, and Double Dragon shows a draining health bar.
-- Teenage Mutant Ninja Turtles has smoke drifting off the burning building, a flickering PIZZA sign, April O'Neil waving from a window, manhole lids popping, the Party Wagon parked on the street, dripping sewer pipes, Leatherhead's eyes in the sewer, a cape on the boss, a health bar in the turtle's color, and lives and pizzas along the bottom. The Foot Soldiers' uniform color changes per session.
-- Stars twinkle in the empty night backdrop of Space Invaders, Asteroids, Centipede, Mortal Kombat, Double Dragon and Teenage Mutant Ninja Turtles.
+
+### What each game shows
+
+| Game | Scene and details |
+|---|---|
+| Pac-Man | a ghost house with Inky and Clyde, two pellet corridors with blinking power pellets, eaten-ghost eyes, scared ghosts that flash white before they recover, ghost points, and the bonus fruit with a row of the fruit served so far |
+| Ms. Pac-Man | solid maze walls with rounded corners and warp tunnels, her red bow, a three-frame chomp, Sue in the ghost house, Pac-Man crossing the corridor, the stork carrying Junior, a ghost in the warp tunnel, a bouncing fruit and a Midway credit |
+| Space Invaders | three invader species marching in step, zig-zag bombs, bursts, a mystery ship, the point table, damaged bunkers, a cratered ground line, lives and credits |
+| Frogger | home bays with rescued frogs, a fly and a crocodile, two river lanes with logs, diving turtles and crocodiles, the lady frog on a log, a snake on the median, cars and trucks, and a draining TIME bar |
+| Asteroids | tumbling rocks in three sizes, exploding debris, a turning ship with a flickering flame, two saucers that burst, lives and the Atari credit |
+| Centipede | a long animated centipede, a spider, shot-up and poisoned mushrooms, a scorpion, spider points, and bursts that leave mushrooms behind |
+| Breakout | eight brick rows in the overlay colors with knocked-out and flashing bricks, wide paddles, a square ball with a streak, falling chips and a shattering bonus brick |
+| Tetris | falling pieces, a St. Basil's skyline with flashing domes, rotating pieces, a dissolving line clear, a jagged stack, garbage blocks, the game type, the level and the NEXT piece |
+| Super Mario Bros | hills, bushes, pipes with Piranha Plants, spinning coins, a flagpole and castle, the HUD, run cycles, stomps and bouncing fireballs, with underground and castle levels |
+| Mortal Kombat | the Pit bridge over spikes, the Courtyard or Goro's Lair, health bars, win medallions, blood, Goro, and each fighter's own special move |
+| Mortal Kombat II | the Dead Pool with hooks, chains and skeletons in the acid, or the Living Forest, the Portal or the Tomb, special moves, Shao Kahn or Kintaro, and Toasty! |
+| Mortal Kombat 3 | the Subway with flickering lights, an EXIT sign and a passing train, or the Street or the Pit 3, special moves, freeze and net stuns, Shao Kahn or Motaro, and a round clock |
+| Rampage | buildings with flickering and burning windows, screaming people, a HOTEL sign, an antenna and water tower, a police car, rubble and dust behind the monster, thrown debris, exploding vehicles and damage meters |
+| Double Dragon | a brick wall with a neon 雙截龍 sign, graffiti and a fence, or the factory or forest missions, mission and time captions, gang members, a boss carrying Marian, weapons and a health bar |
+| Teenage Mutant Ninja Turtles | a burning building with smoke, a PIZZA sign and April at a window, the street with manholes and the Party Wagon, the sewer with Leatherhead, Foot Soldiers, a caped boss, a health bar, lives and pizzas |
 
 ### Per-session variety
 
@@ -53,17 +68,19 @@ Each session also gets small variations of its game, picked from a hash of the s
 
 | Game | What varies |
 |---|---|
-| Mortal Kombat, II and 3 | your fighter and the rival from that game's roster (names on the scoreboard and their colors), the boss's color, and the banner (FIGHT!, ROUND 1, ROUND 2 or ROUND 3) |
-| Rampage | George, Lizzie or Ralph, and the rival monster |
-| Double Dragon | Billy (1P, blue) or Jimmy (2P, red), and the enemy's color |
-| Teenage Mutant Ninja Turtles | Leonardo, Raphael, Michelangelo or Donatello in their mask color, each throwing their own weapon (a spinning katana, a sai, nunchucks or a bo), a partner turtle on the scoreboard, the boss behind the Foot Soldiers (Shredder, Bebop, Rocksteady or Krang), and the banner (COWABUNGA! or PIZZA TIME) |
-| Super Mario Bros | Mario or Luigi, the WORLD number and the coin count |
-| Pac-Man | which two ghosts chase, the fruit color and the spare lives |
-| Ms. Pac-Man | the maze colors (one of the four arcade mazes), the fruit, the ghosts, the intermission banner and the spare lives |
-| Space Invaders, Frogger, Asteroids | spare lives and the credit count |
-| Centipede | the mushroom colors of the wave |
-| Tetris | the NEXT piece |
-| Breakout | the ball number |
+| Pac-Man | which two ghosts chase, the fruit, the spare lives and the banner (READY!, PLAYER ONE or GAME OVER) |
+| Ms. Pac-Man | the maze colors (one of the four arcade mazes), the fruit, the ghosts, the spare lives and the intermission banner |
+| Space Invaders | the spare lives, the credit count, the banner and the chasing invader species |
+| Frogger | the spare lives, the banner and the chasing vehicles |
+| Asteroids | the spare lives and the banner |
+| Centipede | the mushroom colors and the wave number |
+| Breakout | the ball number, the paddle color and the banner |
+| Tetris | the NEXT piece, the game type, the level, the piece colors and the banner |
+| Super Mario Bros | Mario or Luigi, the world and level (level 2 is underground, level 4 is the castle), the coin count and the lives |
+| Mortal Kombat, II and 3 | your fighter and the rival from that game's roster, with their colors and special moves, the arena, the boss, the announcer's call and the win medallions |
+| Rampage | your monster and the rival, the day's city, day or night, and the food in the window |
+| Double Dragon | Billy (1P, blue) or Jimmy (2P, red), the mission, the gang member, the boss, the weapon and the spare lives |
+| Teenage Mutant Ninja Turtles | your turtle in its mask color with its own weapon, a partner turtle, the Foot Soldiers' uniform color, the boss, the banner, the lives and the pizza count |
 
 ### The scoreboard
 
@@ -77,14 +94,12 @@ The bottom border shows a scoreboard in the style of each game. The score is 10 
 | Ms. Pac-Man | `1UP` (blinks) | `HIGH SCORE` |
 | Asteroids | the score | the high score |
 | Centipede | the score and two lives | the high score |
-| Breakout | a three-digit score | `BALL 1` |
+| Breakout | a three-digit score | `BALL` and the ball number |
 | Tetris | `SCORE` | `LINES`, the lines Claude removed |
-| Super Mario Bros | `MARIO` | `TIME`, which starts at 400 and loses one per minute of the session |
-| Mortal Kombat | `SCORPION` | `SUB-ZERO` |
-| Mortal Kombat II | `LIU KANG` | `SHAO KAHN` |
-| Mortal Kombat 3 | `SUB-ZERO` | `SEKTOR` |
-| Rampage | `GEORGE` | `LIZZIE` |
-| Double Dragon | `1P` | `HI` |
+| Super Mario Bros | `MARIO` or `LUIGI` | `TIME`, which starts at 400 and loses one per minute of the session |
+| Mortal Kombat, II and 3 | your fighter's name | the rival's name |
+| Rampage | your monster's name | the rival monster's name |
+| Double Dragon | `1P` or `2P` | `HI` |
 | Teenage Mutant Ninja Turtles | your turtle's name | the partner turtle's name |
 
 When the border is too narrow for both sides, the right side goes first.
