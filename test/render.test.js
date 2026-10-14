@@ -201,3 +201,12 @@ test('render fills each game scoreboard and drops the right board when the borde
   assert.match(border('mario', 54), /^╰══ MARIO 000710 ═+ TIME 375 ══╯$/)
   assert.match(border('mortal-kombat-2', 30), /^╰══ LIU KANG 000710 ═+╯$/)
 })
+
+test('render pins the caption one cell in from each edge of the base row', () => {
+  const invaders = GAMES.find((game) => game.id === 'invaders')
+
+  const base = (frame) => render(INPUT, { ...OPTIONS, game: invaders, frame }).replace(ANSI, '').split('\n')[5]
+
+  assert.match(base(0), /^║ ▔3 ᐃᐃ.*CREDIT 00▔ ║$/)
+  assert.match(base(7), /^║ ▔3 ᐃᐃ.*CREDIT 00▔ ║$/)
+})

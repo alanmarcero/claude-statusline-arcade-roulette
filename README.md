@@ -43,6 +43,7 @@ A character takes the background color of the scenery under it. Chinese characte
 - Pac-Man flashes READY!, Super Mario Bros flashes WORLD 1-1, and the Mortal Kombat games flash FIGHT! every twenty frames.
 - In Space Invaders, Asteroids, Centipede, Super Mario Bros, the three Mortal Kombat games and Double Dragon, the player fires a shot that crosses the field three cells per frame.
 - While the session is idle, the bottom border shows INSERT COIN.
+- The base row carries fixed captions like the bottom of an arcade screen: spare lives, Pac-Man's cherries, `CREDIT 00` in Space Invaders, the Frogger TIME bar, `L=01` in Donkey Kong and Mario's coin count.
 
 ### The scoreboard
 
