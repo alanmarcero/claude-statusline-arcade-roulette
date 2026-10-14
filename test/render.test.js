@@ -177,3 +177,11 @@ test('render swaps in the scared sprite for every chaser during the scare frames
   assert.equal(ground(0).split(scaredGhost).length - 1, 2)
   assert.ok(!ground(6).includes(pacman.scared.color[0]))
 })
+
+test('render flashes the banner in the middle of the sky for the first frames of each cycle', () => {
+  const sky = (frame) => render(INPUT, { ...OPTIONS, frame }).replace(ANSI, '').split('\n')[2]
+
+  assert.equal(sky(1).indexOf('READY!'), 2 + Math.floor((50 - 'READY!'.length) / 2))
+  assert.ok(!sky(5).includes('READY!'))
+  assert.ok(sky(21).includes('READY!'))
+})
