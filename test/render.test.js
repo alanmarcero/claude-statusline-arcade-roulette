@@ -104,3 +104,21 @@ test('render moves the player into the sky row while it hops and keeps it ground
   assert.ok(rows(INPUT, 2)[1].includes(player))
   assert.ok(!rows(exhausted, 0)[0].includes(GAMES[0].chasers.fiveHour.glyphs[0]))
 })
+
+test('render shows ten points per changed line as the 1UP score in the bottom border', () => {
+  const coded = { ...INPUT, cost: { total_lines_added: 312, total_lines_removed: 41 } }
+
+  const [plain, scored] = [INPUT, coded].map((input) => render(input, OPTIONS).replace(ANSI, '').split('\n')[4])
+
+  assert.match(plain, /^╰══ 1UP 000000 ═+╯$/)
+  assert.match(scored, /^╰══ 1UP 003530 ═+╯$/)
+})
+
+test('render paints an actor on the background of the scenery it covers', () => {
+  const frogger = GAMES.find((game) => game.id === 'frogger')
+  const frog = `${frogger.trail.background}${frogger.player.color}${frogger.player.glyphs[1]}`
+
+  const ground = render(INPUT, { ...OPTIONS, game: frogger, frame: 3 }).split('\n')[3]
+
+  assert.ok(ground.includes(frog))
+})
