@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { GAMES } from '../lib/games.js'
+import { GAMES, WIDE } from '../lib/games.js'
 import { formatCountdown, isAirborne, layout, pickGame, render, tile } from '../lib/render.js'
 
 const ANSI = /\x1b\[[0-9;]*m/g
+const WIDE_ALL = new RegExp(WIDE, 'g')
+const columns = (line) => [...line].length + (line.match(WIDE_ALL)?.length ?? 0)
 const NOW = 1_800_000_000
 const INPUT = {
   version: '2.5.0',
@@ -61,7 +63,7 @@ test('render draws every game with both field rows and both borders at the same 
   const widths = GAMES.flatMap((game) =>
     Array.from({ length: 6 }, (_, frame) => {
       const [, top, sky, ground, bottom] = render(INPUT, { ...OPTIONS, game, frame }).split('\n')
-      return new Set([top, sky, ground, bottom].map((line) => line.replace(ANSI, '').length))
+      return new Set([top, sky, ground, bottom].map((line) => columns(line.replace(ANSI, ''))))
     }),
   )
 
@@ -146,4 +148,15 @@ test('render fires the shot ahead of the player three cells per frame and holds 
 
   assert.equal(shotColumn(INPUT, 3) - shotColumn(INPUT, 2), 3)
   assert.equal(shotColumn(exhausted, 2), -1)
+})
+
+test('render keeps the row width when an actor or the field edge covers half of a wide glyph', () => {
+  const doubleDragon = GAMES.find((game) => game.id === 'double-dragon')
+  const sky = (frame, width) =>
+    render(INPUT, { ...OPTIONS, game: doubleDragon, frame, width }).replace(ANSI, '').split('\n')[2]
+
+  const rows = Array.from({ length: 60 }, (_, frame) => sky(frame, 54 - (frame % 3)))
+
+  assert.ok(rows.some((row) => WIDE.test(row)))
+  assert.ok(rows.every((row, frame) => columns(row) === 54 - (frame % 3)))
 })
