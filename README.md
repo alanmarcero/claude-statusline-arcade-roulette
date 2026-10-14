@@ -4,16 +4,16 @@ A Claude Code status line that deals each Claude session one of fifteen classic 
 
 ```
 CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
-╭══ DONKEY KONG ═════════════════════════════════════════════╮
-║ Ѫ ᛉ▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀ ║
-║    H            H        ѡ   H ᕗ          H        ѡ   H   ║
-║ ▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀ѻ▀▀◉╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀Ŧ▀╳ ║
-║ ▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳▀▀▀╳ ║
-╰══ I 003530 ══════════ INSERT COIN ═══════════ TOP 003530 ══╯
+╭══ MS. PAC-MAN ═════════════════════════════════════════════╮
+║ ▄1600▄▄▄▄▄▄▄█ᗣ━ᗩ█▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄█ᗣ ║
+║ ▐██████▌·· ··▐██▌····●··▐███▌··ᗧ··▐██████▌·· ··▐██▌····●·· ║
+║                      ᗩ  ᗣ     ⋈ ······· ···············ƨ·· ║
+║ ▀ᗧᗧ▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀▀▀ƨ▀ ║
+╰══ 1UP 003530 ══════ INSERT COIN ══════ HIGH SCORE 003530 ══╯
 ѻ 7d 40% ↓3d12h  ◉ 5h 70% ↓1h35m  xhigh
 ```
 
-The games: Pac-Man, Space Invaders, Frogger, Donkey Kong, Asteroids, Centipede, Breakout, Tetris, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon and Teenage Mutant Ninja Turtles.
+The games: Pac-Man, Space Invaders, Frogger, Ms. Pac-Man, Asteroids, Centipede, Breakout, Tetris, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon and Teenage Mutant Ninja Turtles.
 
 ## How to read it
 
@@ -27,9 +27,9 @@ Each game draws its own screen in 256 colors, close to the original cabinet. The
 
 | Row | Scrolls at | Shows |
 |---|---|---|
-| Backdrop | quarter speed | the far scenery: the upper maze wall, the Frogger homes, Donkey Kong and Pauline on the top girder, the top bricks, clouds, the moon, a city skyline |
+| Backdrop | quarter speed | the far scenery: the upper maze wall, the Frogger homes, the Ms. Pac-Man ghost house, the top bricks, clouds, the moon, a city skyline |
 | Sky | half speed | invader formations, traffic, ladders, question blocks, a passing subway train, a burning building. The player and chasers hop into this row. |
-| Ground | full speed | the scenery the player walks on: pellets, the river, girders, the brick floor, the Dead Pool walkway |
+| Ground | full speed | the scenery the player walks on: pellets, the river, the brick floor, the Dead Pool walkway |
 | Base | full speed | the foreground: the lower maze wall, a second traffic lane, Mario's brick underground, bubbling acid, the subway platform edge, street markings, the sewer under the turtles' street |
 
 A character takes the background color of the scenery under it. Chinese characters, such as the neon 雙截龍 sign in Double Dragon, take two columns.
@@ -37,13 +37,13 @@ A character takes the background color of the scenery under it. Chinese characte
 ### The animation
 
 - The title shows the game's own logo colors, with a white glint sweeping across it, and lights chase along the top border.
-- Scenery animates in place: invaders swap poses as they march, water ripples and turtles dive, the oil drum burns, asteroids tumble, Tetris rows flash like a line clear, ? blocks flash and coins spin, torches and windows flicker.
+- Scenery animates in place: invaders swap poses as they march, water ripples and turtles dive, asteroids tumble, Tetris rows flash like a line clear, ? blocks flash and coins spin, torches and windows flicker.
 - Pac-Man's ghosts turn blue and flash for four of every twelve frames, as if he ate a power pellet.
 - Chasers can drag a tail: the centipede's body, a Frogger truck's trailer, a comet trail behind the Breakout ball. The Asteroids ship fires its thruster.
 - Pac-Man flashes READY!, Super Mario Bros flashes WORLD 1-1, and the Mortal Kombat games flash FIGHT! every twenty frames.
 - In Space Invaders, Asteroids, Centipede, Super Mario Bros, the three Mortal Kombat games, Double Dragon and Teenage Mutant Ninja Turtles, the player fires a shot that crosses the field three cells per frame.
 - While the session is idle, the bottom border shows INSERT COIN.
-- The base row carries fixed captions like the bottom of an arcade screen: spare lives, Pac-Man's cherries, `CREDIT 00` in Space Invaders, the Frogger TIME bar, `L=01` in Donkey Kong, Mario's coin count and the next Tetris piece. The Frogger TIME bar drains, the Mortal Kombat games show both fighters' health bars in the top corners, draining as the fight goes on, Rampage shows each monster's damage meter in its color, and Double Dragon shows a draining health bar.
+- The base row carries fixed captions like the bottom of an arcade screen: spare lives, Pac-Man's cherries, `CREDIT 00` in Space Invaders, the Frogger TIME bar, Mario's coin count and the next Tetris piece. The Frogger TIME bar drains, the Mortal Kombat games show both fighters' health bars in the top corners, draining as the fight goes on, Rampage shows each monster's damage meter in its color, and Double Dragon shows a draining health bar.
 - Teenage Mutant Ninja Turtles has smoke drifting off the burning building, a flickering PIZZA sign, April O'Neil waving from a window, manhole lids popping, the Party Wagon parked on the street, dripping sewer pipes, Leatherhead's eyes in the sewer, a cape on the boss, a health bar in the turtle's color, and lives and pizzas along the bottom. The Foot Soldiers' uniform color changes per session.
 - Stars twinkle in the empty night backdrop of Space Invaders, Asteroids, Centipede, Mortal Kombat, Double Dragon and Teenage Mutant Ninja Turtles.
 
@@ -59,7 +59,8 @@ Each session also gets small variations of its game, picked from a hash of the s
 | Teenage Mutant Ninja Turtles | Leonardo, Raphael, Michelangelo or Donatello in their mask color, each throwing their own weapon (a spinning katana, a sai, nunchucks or a bo), a partner turtle on the scoreboard, the boss behind the Foot Soldiers (Shredder, Bebop, Rocksteady or Krang), and the banner (COWABUNGA! or PIZZA TIME) |
 | Super Mario Bros | Mario or Luigi, the WORLD number and the coin count |
 | Pac-Man | which two ghosts chase, the fruit color and the spare lives |
-| Space Invaders, Frogger, Donkey Kong, Asteroids | spare lives, the credit count and the Donkey Kong level |
+| Ms. Pac-Man | the maze colors (one of the four arcade mazes), the fruit, the ghosts, the intermission banner and the spare lives |
+| Space Invaders, Frogger, Asteroids | spare lives and the credit count |
 | Centipede | the mushroom colors of the wave |
 | Tetris | the NEXT piece |
 | Breakout | the ball number |
@@ -73,7 +74,7 @@ The bottom border shows a scoreboard in the style of each game. The score is 10 
 | Pac-Man | `1UP` and the score (1UP blinks) | `HIGH SCORE` |
 | Space Invaders | `SCORE<1>` | `HI-SCORE` |
 | Frogger | `1-UP` (blinks) | `HI-SCORE` |
-| Donkey Kong | `I` | `TOP` |
+| Ms. Pac-Man | `1UP` (blinks) | `HIGH SCORE` |
 | Asteroids | the score | the high score |
 | Centipede | the score and two lives | the high score |
 | Breakout | a three-digit score | `BALL 1` |
@@ -110,13 +111,13 @@ Add it to `~/.claude/settings.json`:
 
 ## Options
 
-- `--game <id>` locks one game: `pacman`, `invaders`, `frogger`, `donkey-kong`, `asteroids`, `centipede`, `breakout`, `tetris`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon` or `tmnt`.
+- `--game <id>` locks one game: `pacman`, `invaders`, `frogger`, `ms-pacman`, `asteroids`, `centipede`, `breakout`, `tetris`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon` or `tmnt`.
 - `--width <n>` sets the width. The default is the terminal width minus 20 columns for the Claude Code buddy, clamped to 30 to 90.
 
 To preview every game:
 
 ```sh
-for game in pacman invaders frogger donkey-kong asteroids centipede breakout tetris mario mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt; do
+for game in pacman invaders frogger ms-pacman asteroids centipede breakout tetris mario mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt; do
   echo '{"context_window":{"used_percentage":40},"rate_limits":{"five_hour":{"used_percentage":30},"seven_day":{"used_percentage":60}}}' \
     | node arcade-roulette.js --game "$game"
 done
