@@ -168,3 +168,24 @@ test('render shows INSERT COIN between the scores while the session is idle and 
   assert.doesNotMatch(border({ isIdle: false }), /INSERT COIN/)
   assert.doesNotMatch(border({ isIdle: true, width: 30 }), /INSERT COIN/)
 })
+
+test('render drags a chaser tail along the ground behind it', () => {
+  const tron = GAMES.find((game) => game.id === 'tron')
+  const { glyphs, color, length } = tron.chasers.fiveHour.tail
+  const scene = layout({ fieldWidth: 50, contextUsed: 40, fiveHourUsed: 30, sevenDayUsed: 60 })
+  const leader = scene.chasers.find((chaser) => chaser.key === 'fiveHour').position
+
+  const ground = render(INPUT, { ...OPTIONS, game: tron, frame: 3 }).split('\n')[3]
+
+  assert.equal(ground.split(`${color}${glyphs[0]}`).length - 1, length)
+  assert.ok(leader > length)
+})
+
+test('render swaps in the scared sprite for every chaser during the scare frames only', () => {
+  const pacman = GAMES.find((game) => game.id === 'pacman')
+  const scaredGhost = `${pacman.scared.color[0]}${pacman.scared.glyphs[0]}`
+  const ground = (frame) => render(INPUT, { ...OPTIONS, game: pacman, frame }).split('\n')[3]
+
+  assert.equal(ground(0).split(scaredGhost).length - 1, 2)
+  assert.ok(!ground(6).includes(pacman.scared.color[0]))
+})
