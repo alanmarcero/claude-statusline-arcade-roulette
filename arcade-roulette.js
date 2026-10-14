@@ -60,5 +60,6 @@ console.log(
     nowSeconds,
     effort: settings.effortLevel,
     highScore,
+    isIdle: frame < nowSeconds,
   }),
 )

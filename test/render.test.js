@@ -160,3 +160,11 @@ test('render keeps the row width when an actor or the field edge covers half of 
   assert.ok(rows.some((row) => WIDE.test(row)))
   assert.ok(rows.every((row, frame) => columns(row) === 54 - (frame % 3)))
 })
+
+test('render shows INSERT COIN between the scores while the session is idle and hides it at narrow widths', () => {
+  const border = (options) => render(INPUT, { ...OPTIONS, ...options }).replace(ANSI, '').split('\n')[4]
+
+  assert.match(border({ isIdle: true }), /^╰══ 1UP 000000 ═+ INSERT COIN ═+ HI 000000 ══╯$/)
+  assert.doesNotMatch(border({ isIdle: false }), /INSERT COIN/)
+  assert.doesNotMatch(border({ isIdle: true, width: 30 }), /INSERT COIN/)
+})
