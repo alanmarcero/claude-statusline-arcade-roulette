@@ -158,6 +158,15 @@ test('render shows INSERT COIN between the scores while the session is idle and 
   assert.doesNotMatch(border({ isIdle: true, width: 30 }), /INSERT COIN/)
 })
 
+test('render pauses an idle console game instead of asking for a coin', () => {
+  const border = (id) =>
+    render(INPUT, { ...OPTIONS, game: GAMES.find((game) => game.id === id), isIdle: true }).replace(ANSI, '').split('\n')[6]
+
+  assert.match(border('mario-3'), /═ PAUSE ═/)
+  assert.match(border('zelda'), /═ CONTINUE · SAVE · RETRY ═/)
+  assert.doesNotMatch(border('zelda'), /INSERT COIN/)
+})
+
 test('render drags a chaser tail along the ground behind it', () => {
   const invaders = GAMES.find((game) => game.id === 'invaders')
   const tail = { glyphs: ['▬'], color: COLOR.white, length: 2 }
@@ -202,6 +211,7 @@ test('render fills each game scoreboard and drops the right board when the borde
 
   assert.match(border('mario', 54), /^╰══ MARIO 000710 ═+ TIME 375 ══╯$/)
   assert.match(border('mario-3', 54), /^╰══ MARIO 000710 ═+ TIME 275 ══╯$/)
+  assert.match(border('zelda', 54), /^╰══ LINK ═+ ◊×071 ══╯$/)
   assert.match(border('mortal-kombat-2', 30), /^╰══ LIU KANG 000710 ═+╯$/)
 })
 

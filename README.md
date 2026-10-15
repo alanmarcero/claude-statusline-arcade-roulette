@@ -9,7 +9,7 @@ CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
 ║   ·   ·    ◎ | ◎   ·  ·    ·  ·Ꮇ  ? ? ?   ·   ·    ◎ | ◎   ║
 ║  ▂▄▄▂      ▐█▌     ∘∘ʘ▂ ᗣ     ▂▄▄▂      ▐█▌     ᛏ▂▄▂   ᚹ   ║
 ║ ╲[ᚹ][ᚠ][ᚹ]╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲M×3 $46╲ ║
-╰══ MARIO 003530 ═════════ INSERT COIN ══════════ TIME 275 ══╯
+╰══ MARIO 003530 ════════════ PAUSE ═════════════ TIME 275 ══╯
 ʘ 7d 40% ↓3d12h  ᗣ 5h 70% ↓1h35m  xhigh
 ```
 
@@ -40,7 +40,7 @@ A character takes the background color of the scenery under it. Chinese and Japa
 - Scenery animates in place, and actors can drag tails, fire shots, flash banners in the sky, and turn scared or stunned for part of each cycle.
 - Captions sit in the corners of the top and bottom rows, like the lives, credits, health bars and timers around an arcade screen. Some of them count down or drain.
 - Stars twinkle in the empty backdrop of the night scenes.
-- While the session is idle, the bottom border shows INSERT COIN.
+- While the session is idle, the bottom border of an arcade game shows INSERT COIN. The NES games (the three Super Mario Bros games, Zelda and Punch-Out!!) had no coin slot, so they show PAUSE, and Zelda shows its CONTINUE · SAVE · RETRY menu.
 
 ### What each game shows
 
@@ -52,7 +52,7 @@ A character takes the background color of the scenery under it. Chinese and Japa
 | Super Mario Bros | hills, bushes, pipes with Piranha Plants, spinning coins, a flagpole and castle, the HUD, run cycles, stomps and bouncing fireballs, with underground, treetop and castle levels |
 | Super Mario Bros 2 | tall grassy hills, log platforms, cherries, mushroom blocks and a POW block, sprouts to pluck and thrown turnips, a warp jar, Shy Guys, Birdo, a draining life meter and a Starman, with desert and ice worlds |
 | Super Mario Bros 3 | striped hills, giant bolted blocks, raccoon tails and power-up suits, the P-meter, item cards, the goal roulette, Goombas, Chain Chomps and spinning shells, with Desert Land under the Angry Sun and the airship |
-| The Legend of Zelda | the black status bar with rupees, items and hearts, trees, rocks, Armos statues and a lake, Octoroks, Moblins and Lynels, the sword beam, the Triforce, and the dungeons with Keese and a boss |
+| The Legend of Zelda | the black status bar with items and hearts, trees, rocks, Armos statues and a lake, Octoroks, Moblins and Lynels, the sword beam, the Triforce, and the dungeons with Keese and a boss |
 | Punch-Out!! | the crowd with camera flashes, the ring ropes, the WVBA apron, health bars, hearts, star punches, a round clock, Mario as referee and the circuit's opponents |
 | Mortal Kombat | the Pit bridge over spikes, the Courtyard or Goro's Lair, health bars, win medallions, blood, Goro, and each fighter's own special move |
 | Mortal Kombat II | the Dead Pool with hooks, chains and skeletons in the acid, or the Living Forest, the Portal or the Tomb, special moves, Shao Kahn or Kintaro, and Toasty! |
@@ -74,7 +74,7 @@ Each session also gets small variations of its game, picked from a hash of the s
 | Super Mario Bros | Mario or Luigi, the world and level (level 2 is underground, level 3 is the treetops, level 4 is the castle), the coin count and the lives |
 | Super Mario Bros 2 | Mario, Luigi, Toad or Peach, the world (2 and 6 are desert, 4 is ice), the enemies, the cherries and the lives |
 | Super Mario Bros 3 | Mario or Luigi, the suit (Super, Fire, Raccoon, Tanooki, Frog or Hammer), Grass Land, Desert Land or the airship, the enemies, the item cards, the coins and the lives |
-| The Legend of Zelda | the overworld or one of nine dungeons, the tunic color, the B item, the hearts, the rupees, the enemies and the boss |
+| The Legend of Zelda | the overworld or one of nine dungeons, the tunic color, the B item, the hearts, the enemies and the boss |
 | Punch-Out!! | the opponent and the next contender from the circuit, the hearts, the stars, and the banner, which can be a tip from Doc Louis |
 | Mortal Kombat, II and 3 | your fighter and the rival from that game's roster, with their colors and special moves, the arena, the boss, the announcer's call and the win medallions |
 | Rampage | your monster and the rival, the day's city, day or night, and the food in the window |
@@ -84,7 +84,7 @@ Each session also gets small variations of its game, picked from a hash of the s
 
 ### The scoreboard
 
-The bottom border shows a scoreboard in the style of each game. The score is 10 points for each line Claude added or removed in the session. The high score is the best score for that game across all sessions. It is kept in `~/.claude/arcade-roulette-scores.json`, which the status line writes only when a session beats it.
+The bottom border shows a scoreboard in the style of each game. The score is 10 points for each line Claude added or removed in the session. Super Mario Bros 2 and Zelda keep no score, so they count lines instead, as coins and rupees. The arcade games show a high score, which is the best score for that game across all sessions. It is kept in `~/.claude/arcade-roulette-scores.json`, which the status line writes only when a session beats it.
 
 | Game | Left | Right |
 |---|---|---|
@@ -92,10 +92,10 @@ The bottom border shows a scoreboard in the style of each game. The score is 10 
 | Space Invaders | `SCORE<1>` | `HI-SCORE` |
 | Asteroids | the score | the high score |
 | Super Mario Bros | `MARIO` or `LUIGI` | `TIME`, which starts at 400 and loses one per minute of the session |
-| Super Mario Bros 2 | the hero's name | `HI` |
+| Super Mario Bros 2 | the hero's name | `COINS` and one coin per line changed |
 | Super Mario Bros 3 | `MARIO` or `LUIGI` | `TIME`, which starts at 300 and loses one per minute of the session |
-| The Legend of Zelda | `LINK` | `HI` |
-| Punch-Out!! | `LITTLE MAC` | the opponent's name |
+| The Legend of Zelda | `LINK` | `◊×` and one rupee per line changed |
+| Punch-Out!! | `LITTLE MAC` and the points | the opponent's name |
 | Mortal Kombat, II and 3 | your fighter's name | the rival's name |
 | Rampage | your monster's name | the rival monster's name |
 | Double Dragon | `1P` or `2P` | `HI` |
