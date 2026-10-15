@@ -1,6 +1,6 @@
 # claude-statusline-arcade-roulette
 
-A Claude Code status line that deals each Claude session one of thirteen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
+A Claude Code status line that deals each Claude session one of twelve classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
 
 ```
 CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
@@ -13,7 +13,7 @@ CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
 ᗩ 7d 40% ↓3d12h  ᗣ 5h 70% ↓1h35m
 ```
 
-The games: Pac-Man, Space Invaders, Ms. Pac-Man, Asteroids, Centipede, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon, Teenage Mutant Ninja Turtles and Contra.
+The games: Pac-Man, Space Invaders, Ms. Pac-Man, Asteroids, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon, Teenage Mutant Ninja Turtles and Contra.
 
 ## How to read it
 
@@ -50,7 +50,6 @@ A character takes the background color of the scenery under it. Chinese and Japa
 | Ms. Pac-Man | solid maze walls with rounded corners and warp tunnels, her red bow, a three-frame chomp, Sue in the ghost house, Pac-Man crossing the corridor, the stork carrying Junior, a ghost in the warp tunnel, a bouncing fruit and a Midway credit |
 | Space Invaders | three invader species marching in step, zig-zag bombs, bursts, a mystery ship, the point table, damaged bunkers, a cratered ground line, lives and credits |
 | Asteroids | tumbling rocks in three sizes, exploding debris, a turning ship with a flickering flame, two saucers that burst, lives and the Atari credit |
-| Centipede | a long animated centipede, a spider, shot-up and poisoned mushrooms, a scorpion, spider points, and bursts that leave mushrooms behind |
 | Super Mario Bros | hills, bushes, pipes with Piranha Plants, spinning coins, a flagpole and castle, the HUD, run cycles, stomps and bouncing fireballs, with underground and castle levels |
 | Mortal Kombat | the Pit bridge over spikes, the Courtyard or Goro's Lair, health bars, win medallions, blood, Goro, and each fighter's own special move |
 | Mortal Kombat II | the Dead Pool with hooks, chains and skeletons in the acid, or the Living Forest, the Portal or the Tomb, special moves, Shao Kahn or Kintaro, and Toasty! |
@@ -70,7 +69,6 @@ Each session also gets small variations of its game, picked from a hash of the s
 | Ms. Pac-Man | the maze colors (one of the four arcade mazes), the fruit, the ghosts, the spare lives and the intermission banner |
 | Space Invaders | the spare lives, the credit count, the banner and the chasing invader species |
 | Asteroids | the spare lives and the banner |
-| Centipede | the mushroom colors and the wave number |
 | Super Mario Bros | Mario or Luigi, the world and level (level 2 is underground, level 4 is the castle), the coin count and the lives |
 | Mortal Kombat, II and 3 | your fighter and the rival from that game's roster, with their colors and special moves, the arena, the boss, the announcer's call and the win medallions |
 | Rampage | your monster and the rival, the day's city, day or night, and the food in the window |
@@ -88,7 +86,6 @@ The bottom border shows a scoreboard in the style of each game. The score is 10 
 | Space Invaders | `SCORE<1>` | `HI-SCORE` |
 | Ms. Pac-Man | `1UP` (blinks) | `HIGH SCORE` |
 | Asteroids | the score | the high score |
-| Centipede | the score and two lives | the high score |
 | Super Mario Bros | `MARIO` or `LUIGI` | `TIME`, which starts at 400 and loses one per minute of the session |
 | Mortal Kombat, II and 3 | your fighter's name | the rival's name |
 | Rampage | your monster's name | the rival monster's name |
@@ -120,13 +117,13 @@ Add it to `~/.claude/settings.json`:
 
 ## Options
 
-- `--game <id>` locks one game: `pacman`, `invaders`, `ms-pacman`, `asteroids`, `centipede`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon`, `tmnt` or `contra`.
+- `--game <id>` locks one game: `pacman`, `invaders`, `ms-pacman`, `asteroids`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon`, `tmnt` or `contra`.
 - `--width <n>` sets the width. The default is the terminal width minus 20 columns for the Claude Code buddy, clamped to 30 to 90.
 
 To preview every game:
 
 ```sh
-for game in pacman invaders ms-pacman asteroids centipede mario mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt contra; do
+for game in pacman invaders ms-pacman asteroids mario mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt contra; do
   echo '{"context_window":{"used_percentage":40},"rate_limits":{"five_hour":{"used_percentage":30},"seven_day":{"used_percentage":60}}}' \
     | node arcade-roulette.js --game "$game"
 done
