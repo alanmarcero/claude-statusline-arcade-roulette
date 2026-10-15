@@ -201,6 +201,7 @@ test('render fills each game scoreboard and drops the right board when the borde
     render(coded, { ...OPTIONS, game: GAMES.find((game) => game.id === id), width }).replace(ANSI, '').split('\n')[6]
 
   assert.match(border('mario', 54), /^╰══ MARIO 000710 ═+ TIME 375 ══╯$/)
+  assert.match(border('mario-3', 54), /^╰══ MARIO 000710 ═+ TIME 275 ══╯$/)
   assert.match(border('mortal-kombat-2', 30), /^╰══ LIU KANG 000710 ═+╯$/)
 })
 
