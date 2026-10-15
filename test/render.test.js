@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { GAMES, WIDE } from '../lib/games.js'
+import { COLOR, GAMES, WIDE } from '../lib/games.js'
 import { customize, formatCountdown, isAirborne, layout, pickGame, render, tile } from '../lib/render.js'
 
 const ANSI = /\x1b\[[0-9;]*m/g
@@ -103,12 +103,13 @@ test('render shows ten points per changed line as the score and the larger of it
 })
 
 test('render paints an actor on the background of the scenery it covers', () => {
-  const frogger = GAMES.find((game) => game.id === 'frogger')
-  const frog = `${frogger.trail.background}${frogger.player.color}${frogger.player.glyphs[1]}`
+  const pacman = GAMES.find((game) => game.id === 'pacman')
+  const river = { ...pacman, trail: { ...pacman.trail, background: '\x1b[48;5;94m' } }
+  const actor = `${river.trail.background}${river.player.color}${river.player.glyphs[1]}`
 
-  const ground = render(INPUT, { ...OPTIONS, game: frogger, frame: 3 }).split('\n')[4]
+  const ground = render(INPUT, { ...OPTIONS, game: river, frame: 3 }).split('\n')[4]
 
-  assert.ok(ground.includes(frog))
+  assert.ok(ground.includes(actor))
 })
 
 test('tile steps a multi-character glyph and a color list by frame, offset by the cell index', () => {
@@ -158,12 +159,14 @@ test('render shows INSERT COIN between the scores while the session is idle and 
 })
 
 test('render drags a chaser tail along the ground behind it', () => {
-  const frogger = GAMES.find((game) => game.id === 'frogger')
-  const { glyphs, color, length } = frogger.chasers.fiveHour.tail
+  const invaders = GAMES.find((game) => game.id === 'invaders')
+  const tail = { glyphs: ['▬'], color: COLOR.white, length: 2 }
+  const towing = { ...invaders, chasers: { ...invaders.chasers, fiveHour: { ...invaders.chasers.fiveHour, tail } } }
+  const { glyphs, color, length } = tail
   const scene = layout(50, 3)
   const leader = scene.chasers.find((chaser) => chaser.key === 'fiveHour').position
 
-  const ground = render(INPUT, { ...OPTIONS, game: frogger, frame: 3 }).split('\n')[4]
+  const ground = render(INPUT, { ...OPTIONS, game: towing, frame: 3 }).split('\n')[4]
 
   assert.equal(ground.split(`${color}${glyphs[0]}`).length - 1, length)
   assert.ok(leader > length)
@@ -197,7 +200,6 @@ test('render fills each game scoreboard and drops the right board when the borde
   const border = (id, width) =>
     render(coded, { ...OPTIONS, game: GAMES.find((game) => game.id === id), width }).replace(ANSI, '').split('\n')[6]
 
-  assert.match(border('tetris', 54), /^╰══ SCORE 000710 ═+ LINES 041 ══╯$/)
   assert.match(border('mario', 54), /^╰══ MARIO 000710 ═+ TIME 375 ══╯$/)
   assert.match(border('mortal-kombat-2', 30), /^╰══ LIU KANG 000710 ═+╯$/)
 })
@@ -243,7 +245,7 @@ test('render twinkles stars in the empty backdrop cells of a starry game only', 
 
   assert.ok(backdrop('double-dragon', 0).includes('·'))
   assert.notEqual(backdrop('double-dragon', 0), backdrop('double-dragon', 2))
-  assert.ok(!backdrop('breakout', 0).includes('·'))
+  assert.ok(!backdrop('mario', 0).includes('·'))
 })
 
 test('render keeps every game at the minimum width, dropping a title that does not fit', () => {

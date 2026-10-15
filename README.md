@@ -1,6 +1,6 @@
 # claude-statusline-arcade-roulette
 
-A Claude Code status line that deals each Claude session one of fifteen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
+A Claude Code status line that deals each Claude session one of thirteen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
 
 ```
 CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
@@ -13,7 +13,7 @@ CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
 ᗩ 7d 40% ↓3d12h  ᗣ 5h 70% ↓1h35m
 ```
 
-The games: Pac-Man, Space Invaders, Frogger, Ms. Pac-Man, Asteroids, Centipede, Breakout, Tetris, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon and Teenage Mutant Ninja Turtles.
+The games: Pac-Man, Space Invaders, Ms. Pac-Man, Asteroids, Centipede, Super Mario Bros, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon, Teenage Mutant Ninja Turtles and Contra.
 
 ## How to read it
 
@@ -27,12 +27,12 @@ Each game draws its own screen in 256 colors, close to the original cabinet. The
 
 | Row | Scrolls at | Shows |
 |---|---|---|
-| Backdrop | quarter speed | the far scenery: the upper maze wall, the Frogger homes, the Ms. Pac-Man ghost house, the top bricks, clouds, the moon, a city skyline |
-| Sky | half speed | invader formations, traffic, ladders, question blocks, a passing subway train, a burning building. The player and chasers hop into this row. |
+| Backdrop | quarter speed | the far scenery: the upper maze wall, the Ms. Pac-Man ghost house, clouds, jungle palms, the moon, a city skyline |
+| Sky | half speed | invader formations, the Contra base wall, question blocks, a passing subway train, a burning building. The player and chasers hop into this row. |
 | Ground | full speed | the scenery the player walks on: pellets, the river, hills and pipes, bridges, the street |
-| Base | full speed | the foreground: the lower maze wall, a second traffic lane, Mario's brick underground, bubbling acid, the subway platform edge, street markings, the sewer under the turtles' street |
+| Base | full speed | the foreground: the lower maze wall, Mario's brick underground, bubbling acid, the subway platform edge, street markings, the sewer under the turtles' street |
 
-A character takes the background color of the scenery under it. Chinese characters, such as the neon 雙截龍 sign in Double Dragon, take two columns.
+A character takes the background color of the scenery under it. Chinese and Japanese characters, such as the neon 雙截龍 sign in Double Dragon and the 魂斗羅 base wall in Contra, take two columns.
 
 ### The animation
 
@@ -49,11 +49,8 @@ A character takes the background color of the scenery under it. Chinese characte
 | Pac-Man | a ghost house with Inky and Clyde, two pellet corridors with blinking power pellets, eaten-ghost eyes, scared ghosts that flash white before they recover, ghost points, and the bonus fruit with a row of the fruit served so far |
 | Ms. Pac-Man | solid maze walls with rounded corners and warp tunnels, her red bow, a three-frame chomp, Sue in the ghost house, Pac-Man crossing the corridor, the stork carrying Junior, a ghost in the warp tunnel, a bouncing fruit and a Midway credit |
 | Space Invaders | three invader species marching in step, zig-zag bombs, bursts, a mystery ship, the point table, damaged bunkers, a cratered ground line, lives and credits |
-| Frogger | home bays with rescued frogs, a fly and a crocodile, two river lanes with logs, diving turtles and crocodiles, the lady frog on a log, a snake on the median, cars and trucks, and a draining TIME bar |
 | Asteroids | tumbling rocks in three sizes, exploding debris, a turning ship with a flickering flame, two saucers that burst, lives and the Atari credit |
 | Centipede | a long animated centipede, a spider, shot-up and poisoned mushrooms, a scorpion, spider points, and bursts that leave mushrooms behind |
-| Breakout | eight brick rows in the overlay colors with knocked-out and flashing bricks, wide paddles, a square ball with a streak, falling chips and a shattering bonus brick |
-| Tetris | falling pieces, a St. Basil's skyline with flashing domes, rotating pieces, a dissolving line clear, a jagged stack, garbage blocks, the game type, the level and the NEXT piece |
 | Super Mario Bros | hills, bushes, pipes with Piranha Plants, spinning coins, a flagpole and castle, the HUD, run cycles, stomps and bouncing fireballs, with underground and castle levels |
 | Mortal Kombat | the Pit bridge over spikes, the Courtyard or Goro's Lair, health bars, win medallions, blood, Goro, and each fighter's own special move |
 | Mortal Kombat II | the Dead Pool with hooks, chains and skeletons in the acid, or the Living Forest, the Portal or the Tomb, special moves, Shao Kahn or Kintaro, and Toasty! |
@@ -61,6 +58,7 @@ A character takes the background color of the scenery under it. Chinese characte
 | Rampage | buildings with flickering and burning windows, screaming people, a HOTEL sign, an antenna and water tower, a police car, rubble and dust behind the monster, thrown debris, exploding vehicles and damage meters |
 | Double Dragon | a brick wall with a neon 雙截龍 sign, graffiti and a fence, or the factory or forest missions, mission and time captions, gang members, a boss carrying Marian, weapons and a health bar |
 | Teenage Mutant Ninja Turtles | a burning building with smoke, a PIZZA sign and April at a window, the street with manholes and the Party Wagon, the sewer with Leatherhead, Foot Soldiers, a caped boss, a health bar, lives and pizzas |
+| Contra | jungle palms, the Red Falcon base wall with the 魂斗羅 kanji, sniper towers and a blinking core, a bridge that blows up behind the player, a scuba soldier in the river, a falcon capsule, spread-gun shots, life medals, and the waterfall (滝) or the alien lair (心臓) stages |
 
 ### Per-session variety
 
@@ -71,16 +69,14 @@ Each session also gets small variations of its game, picked from a hash of the s
 | Pac-Man | which two ghosts chase, the fruit, the spare lives and the banner (READY!, PLAYER ONE or GAME OVER) |
 | Ms. Pac-Man | the maze colors (one of the four arcade mazes), the fruit, the ghosts, the spare lives and the intermission banner |
 | Space Invaders | the spare lives, the credit count, the banner and the chasing invader species |
-| Frogger | the spare lives, the banner and the chasing vehicles |
 | Asteroids | the spare lives and the banner |
 | Centipede | the mushroom colors and the wave number |
-| Breakout | the ball number, the paddle color and the banner |
-| Tetris | the NEXT piece, the game type, the level, the piece colors and the banner |
 | Super Mario Bros | Mario or Luigi, the world and level (level 2 is underground, level 4 is the castle), the coin count and the lives |
 | Mortal Kombat, II and 3 | your fighter and the rival from that game's roster, with their colors and special moves, the arena, the boss, the announcer's call and the win medallions |
 | Rampage | your monster and the rival, the day's city, day or night, and the food in the window |
 | Double Dragon | Billy (1P, blue) or Jimmy (2P, red), the mission, the gang member, the boss, the weapon and the spare lives |
 | Teenage Mutant Ninja Turtles | your turtle in its mask color with its own weapon, a partner turtle, the Foot Soldiers' uniform color, the boss, the banner, the lives and the pizza count |
+| Contra | Bill (1P, blue) or Lance (2P, red), the weapon (S, M, L, F or R) with its own shots, the stage, the spare medals and the banner |
 
 ### The scoreboard
 
@@ -90,17 +86,15 @@ The bottom border shows a scoreboard in the style of each game. The score is 10 
 |---|---|---|
 | Pac-Man | `1UP` and the score (1UP blinks) | `HIGH SCORE` |
 | Space Invaders | `SCORE<1>` | `HI-SCORE` |
-| Frogger | `1-UP` (blinks) | `HI-SCORE` |
 | Ms. Pac-Man | `1UP` (blinks) | `HIGH SCORE` |
 | Asteroids | the score | the high score |
 | Centipede | the score and two lives | the high score |
-| Breakout | a three-digit score | `BALL` and the ball number |
-| Tetris | `SCORE` | `LINES`, the lines Claude removed |
 | Super Mario Bros | `MARIO` or `LUIGI` | `TIME`, which starts at 400 and loses one per minute of the session |
 | Mortal Kombat, II and 3 | your fighter's name | the rival's name |
 | Rampage | your monster's name | the rival monster's name |
 | Double Dragon | `1P` or `2P` | `HI` |
 | Teenage Mutant Ninja Turtles | your turtle's name | the partner turtle's name |
+| Contra | `1P` or `2P` | `HI` |
 
 When the border is too narrow for both sides, the right side goes first.
 
@@ -126,13 +120,13 @@ Add it to `~/.claude/settings.json`:
 
 ## Options
 
-- `--game <id>` locks one game: `pacman`, `invaders`, `frogger`, `ms-pacman`, `asteroids`, `centipede`, `breakout`, `tetris`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon` or `tmnt`.
+- `--game <id>` locks one game: `pacman`, `invaders`, `ms-pacman`, `asteroids`, `centipede`, `mario`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon`, `tmnt` or `contra`.
 - `--width <n>` sets the width. The default is the terminal width minus 20 columns for the Claude Code buddy, clamped to 30 to 90.
 
 To preview every game:
 
 ```sh
-for game in pacman invaders frogger ms-pacman asteroids centipede breakout tetris mario mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt; do
+for game in pacman invaders ms-pacman asteroids centipede mario mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt contra; do
   echo '{"context_window":{"used_percentage":40},"rate_limits":{"five_hour":{"used_percentage":30},"seven_day":{"used_percentage":60}}}' \
     | node arcade-roulette.js --game "$game"
 done
