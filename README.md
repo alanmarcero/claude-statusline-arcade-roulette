@@ -38,7 +38,7 @@ A character takes the background color of the scenery under it. Chinese and Japa
 
 - The title shows the game's own logo colors, with a white glint sweeping across it, and lights chase along the top border.
 - Scenery animates in place, and actors can drag tails, fire shots, flash banners in the sky, and turn scared or stunned for part of each cycle.
-- Captions sit in the corners of the top and bottom rows, like the lives, credits, health bars and timers around an arcade screen. Some of them count down or drain.
+- Captions sit in the corners of the top and bottom rows, like the lives, credits, health bars and timers around an arcade screen. Some of them count down or drain. The Mortal Kombat games name the arena between the health bars when the field is wide enough.
 - Stars twinkle in the empty backdrop of the night scenes.
 - While the session is idle, the bottom border of an arcade game shows INSERT COIN. The console games (the three Super Mario Bros games, Zelda, Punch-Out!! and the two Sonic games) had no coin slot, so they show PAUSE, and Zelda shows its CONTINUE · SAVE · RETRY menu.
 

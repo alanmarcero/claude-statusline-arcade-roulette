@@ -224,6 +224,14 @@ test('render pins the caption one cell in from each edge of the base row', () =>
   assert.match(base(7), /^║ .©1987 KONAMI.+S. ║$/)
 })
 
+test('render centers the arena name between the health bars and drops it when they leave no room', () => {
+  const mortalKombat = GAMES.find((game) => game.id === 'mortal-kombat-2')
+  const backdrop = (width) => render(INPUT, { ...OPTIONS, game: mortalKombat, width }).replace(ANSI, '').split('\n')[2]
+
+  assert.equal(backdrop(54).indexOf('DEAD POOL'), 2 + Math.floor((50 - 'DEAD POOL'.length) / 2))
+  assert.doesNotMatch(backdrop(30), /DEAD|POOL/)
+})
+
 test('render steps an animated caption every two frames, keeping it pinned to its edge', () => {
   const mortalKombat = GAMES.find((game) => game.id === 'mortal-kombat-3')
   const backdrop = (frame) => render(INPUT, { ...OPTIONS, game: mortalKombat, frame }).replace(ANSI, '').split('\n')[2]
