@@ -123,12 +123,12 @@ test('tile steps a multi-character glyph and a color list by frame, offset by th
 })
 
 test('render fires the shot from two cells ahead of the player, three cells further each frame', () => {
-  const invaders = GAMES.find((game) => game.id === 'invaders')
+  const contra = GAMES.find((game) => game.id === 'contra')
   const shotColumn = (frame) =>
-    render(INPUT, { ...OPTIONS, game: invaders, frame })
+    render(INPUT, { ...OPTIONS, game: contra, frame })
       .replace(ANSI, '')
       .split('\n')[4]
-      .indexOf(invaders.shot.glyphs[frame % invaders.shot.glyphs.length])
+      .indexOf(contra.shot.glyphs[frame % contra.shot.glyphs.length])
   // The row starts with the border and a space, so field cell n is column n + 2.
   const expected = (frame) => {
     const { player } = layout(50, frame)
@@ -168,9 +168,9 @@ test('render pauses an idle console game instead of asking for a coin', () => {
 })
 
 test('render drags a chaser tail along the ground behind it', () => {
-  const invaders = GAMES.find((game) => game.id === 'invaders')
+  const mortalKombat = GAMES.find((game) => game.id === 'mortal-kombat')
   const tail = { glyphs: ['▬'], color: COLOR.white, length: 2 }
-  const towing = { ...invaders, chasers: { ...invaders.chasers, fiveHour: { ...invaders.chasers.fiveHour, tail } } }
+  const towing = { ...mortalKombat, chasers: { ...mortalKombat.chasers, fiveHour: { ...mortalKombat.chasers.fiveHour, tail } } }
   const { glyphs, color, length } = tail
   const scene = layout(50, 3)
   const leader = scene.chasers.find((chaser) => chaser.key === 'fiveHour').position
@@ -216,12 +216,12 @@ test('render fills each game scoreboard and drops the right board when the borde
 })
 
 test('render pins the caption one cell in from each edge of the base row', () => {
-  const invaders = GAMES.find((game) => game.id === 'invaders')
+  const contra = GAMES.find((game) => game.id === 'contra')
 
-  const base = (frame) => render(INPUT, { ...OPTIONS, game: invaders, frame }).replace(ANSI, '').split('\n')[5]
+  const base = (frame) => render(INPUT, { ...OPTIONS, game: contra, frame }).replace(ANSI, '').split('\n')[5]
 
-  assert.match(base(0), /^║ ▔3 ΔΔ.*CREDIT 00▔ ║$/)
-  assert.match(base(7), /^║ ▔3 ΔΔ.*CREDIT 00▔ ║$/)
+  assert.match(base(0), /^║ .©1987 KONAMI.+S. ║$/)
+  assert.match(base(7), /^║ .©1987 KONAMI.+S. ║$/)
 })
 
 test('render steps an animated caption every two frames, keeping it pinned to its edge', () => {

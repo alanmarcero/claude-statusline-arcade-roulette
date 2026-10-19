@@ -1,6 +1,6 @@
 # claude-statusline-arcade-roulette
 
-A Claude Code status line that deals each Claude session one of seventeen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
+A Claude Code status line that deals each Claude session one of sixteen classic arcade games. The game comes from a hash of the session ID, so a session keeps its game for its whole life and a new session gets a new roll.
 
 ```
 CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
@@ -13,7 +13,7 @@ CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
 ʘ 7d 40% ↓3d12h  ᗣ 5h 70% ↓1h35m  xhigh
 ```
 
-The games: Pac-Man, Space Invaders, Asteroids, Super Mario Bros, Super Mario Bros 2, Super Mario Bros 3, The Legend of Zelda, Punch-Out!!, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon, Teenage Mutant Ninja Turtles, Contra, Sonic the Hedgehog and Sonic the Hedgehog 2.
+The games: Pac-Man, Asteroids, Super Mario Bros, Super Mario Bros 2, Super Mario Bros 3, The Legend of Zelda, Punch-Out!!, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon, Teenage Mutant Ninja Turtles, Contra, Sonic the Hedgehog and Sonic the Hedgehog 2.
 
 ## How to read it
 
@@ -28,7 +28,7 @@ Each game draws its own screen in 256 colors, close to the original cabinet. The
 | Row | Scrolls at | Shows |
 |---|---|---|
 | Backdrop | quarter speed | the far scenery: the upper maze wall, the Pac-Man ghost house, clouds, the Zelda status bar, the Punch-Out!! crowd, jungle palms, the moon, a city skyline |
-| Sky | half speed | invader formations, the Contra base wall, question blocks, a passing subway train, a burning building. The player and chasers hop into this row. |
+| Sky | half speed | Sonic's rings and palms, the Contra base wall, question blocks, a passing subway train, a burning building. The player and chasers hop into this row. |
 | Ground | full speed | the scenery the player walks on: pellets, the river, hills and pipes, bridges, the street |
 | Base | full speed | the foreground: the lower maze wall, Mario's brick underground, bubbling acid, the subway platform edge, street markings, the sewer under the turtles' street |
 
@@ -47,7 +47,6 @@ A character takes the background color of the scenery under it. Chinese and Japa
 | Game | Scene and details |
 |---|---|
 | Pac-Man | a ghost house with Inky and Clyde, two pellet corridors with blinking power pellets, eaten-ghost eyes, scared ghosts that flash white before they recover, ghost points, and the bonus fruit with a row of the fruit served so far |
-| Space Invaders | three invader species marching in step, zig-zag bombs, bursts, a mystery ship, the point table, damaged bunkers, a cratered ground line, lives and credits |
 | Asteroids | tumbling rocks in three sizes, exploding debris, a turning ship with a flickering flame, two saucers that burst, lives and the Atari credit |
 | Super Mario Bros | hills, bushes, pipes with Piranha Plants, spinning coins, a flagpole and castle, the HUD, run cycles, stomps and bouncing fireballs, with underground, treetop and castle levels |
 | Super Mario Bros 2 | tall grassy hills, log platforms, cherries, mushroom blocks and a POW block, sprouts to pluck and thrown turnips, a warp jar, Shy Guys, Birdo, a draining life meter and a Starman, with desert and ice worlds |
@@ -71,7 +70,6 @@ Each session also gets small variations of its game, picked from a hash of the s
 | Game | What varies |
 |---|---|
 | Pac-Man | which two ghosts chase, the fruit, the spare lives and the banner (READY!, PLAYER ONE or GAME OVER) |
-| Space Invaders | the spare lives, the credit count, the banner and the chasing invader species |
 | Asteroids | the spare lives and the banner |
 | Super Mario Bros | Mario or Luigi, the world and level (level 2 is underground, level 3 is the treetops, level 4 is the castle), the coin count and the lives |
 | Super Mario Bros 2 | Mario, Luigi, Toad or Peach, the world (2 and 6 are desert, 4 is ice), the enemies, the cherries and the lives |
@@ -93,7 +91,6 @@ The bottom border shows a scoreboard in the style of each game. The score is 10 
 | Game | Left | Right |
 |---|---|---|
 | Pac-Man | `1UP` and the score (1UP blinks) | `HIGH SCORE` |
-| Space Invaders | `SCORE<1>` | `HI-SCORE` |
 | Asteroids | the score | the high score |
 | Super Mario Bros | `MARIO` or `LUIGI` | `TIME`, which starts at 400 and loses one per minute of the session |
 | Super Mario Bros 2 | the hero's name | `COINS` and one coin per line changed |
@@ -131,13 +128,13 @@ Add it to `~/.claude/settings.json`:
 
 ## Options
 
-- `--game <id>` locks one game: `pacman`, `invaders`, `asteroids`, `mario`, `mario-2`, `mario-3`, `zelda`, `punch-out`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon`, `tmnt`, `contra`, `sonic` or `sonic-2`.
+- `--game <id>` locks one game: `pacman`, `asteroids`, `mario`, `mario-2`, `mario-3`, `zelda`, `punch-out`, `mortal-kombat`, `mortal-kombat-2`, `mortal-kombat-3`, `rampage`, `double-dragon`, `tmnt`, `contra`, `sonic` or `sonic-2`.
 - `--width <n>` sets the width. The default is the terminal width minus 20 columns for the Claude Code buddy, clamped to 30 to 90.
 
 To preview every game:
 
 ```sh
-for game in pacman invaders asteroids mario mario-2 mario-3 zelda punch-out mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt contra sonic sonic-2; do
+for game in pacman asteroids mario mario-2 mario-3 zelda punch-out mortal-kombat mortal-kombat-2 mortal-kombat-3 rampage double-dragon tmnt contra sonic sonic-2; do
   echo '{"context_window":{"used_percentage":40},"rate_limits":{"five_hour":{"used_percentage":30},"seven_day":{"used_percentage":60}}}' \
     | node arcade-roulette.js --game "$game"
 done
