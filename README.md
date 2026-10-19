@@ -51,7 +51,7 @@ A character takes the background color of the scenery under it. Chinese and Japa
 | Super Mario Bros | hills, bushes, pipes with Piranha Plants, spinning coins, a flagpole and castle, the HUD, run cycles, stomps and bouncing fireballs, with underground, treetop and castle levels |
 | Super Mario Bros 2 | tall grassy hills, log platforms, cherries, mushroom blocks and a POW block, sprouts to pluck and thrown turnips, a warp jar, Shy Guys, Birdo, a draining life meter and a Starman, with desert and ice worlds |
 | Super Mario Bros 3 | striped hills, giant bolted blocks, raccoon tails and power-up suits, the P-meter, item cards, the goal roulette, Goombas, Chain Chomps and spinning shells, with Desert Land under the Angry Sun and the airship |
-| The Legend of Zelda | the black status bar with items and hearts, trees, rocks, Armos statues and a lake, Octoroks, Moblins and Lynels, the sword beam, the Triforce, and the dungeons with Keese and a boss |
+| The Legend of Zelda | the black status bar with items and hearts, trees, rocks, Armos statues and a lake, Octoroks, Moblins and Lynels, the sword beam, the Triforce, the old man's cave or a shop, Death Mountain with falling boulders, the graveyard with Ghini, and the dungeons, each with its own colors, keys, Keese, Stalfos, Darknuts, Wizzrobes or Gels, and the level's boss, with Ganon in Level 9 |
 | Punch-Out!! | the crowd with camera flashes, the ring ropes, the WVBA apron, health bars, hearts, star punches, a round clock, Mario as referee and the circuit's opponents |
 | Mortal Kombat | the Pit bridge over spikes, the Courtyard or Goro's Lair, health bars, win medallions, blood, Goro, and each fighter's own special move |
 | Mortal Kombat II | the Dead Pool with hooks, chains and skeletons in the acid, or the Living Forest, the Portal or the Tomb, special moves, Shao Kahn or Kintaro, and Toasty! |
@@ -74,7 +74,7 @@ Each session also gets small variations of its game, picked from a hash of the s
 | Super Mario Bros | Mario or Luigi, the world and level (level 2 is underground, level 3 is the treetops, level 4 is the castle), the coin count and the lives |
 | Super Mario Bros 2 | Mario, Luigi, Toad or Peach, the world (2 and 6 are desert, 4 is ice), the enemies, the cherries and the lives |
 | Super Mario Bros 3 | Mario or Luigi, the suit (Super, Fire, Raccoon, Tanooki, Frog or Hammer), Grass Land, Desert Land or the airship, the enemies, the item cards, the coins and the lives |
-| The Legend of Zelda | the overworld or one of nine dungeons, the tunic color, the B item, the hearts, the enemies and the boss |
+| The Legend of Zelda | the overworld, the old man's cave, Death Mountain, the graveyard or one of nine dungeons, the tunic color, the B item, the hearts, the enemies and the boss |
 | Punch-Out!! | the opponent and the next contender from the circuit, the hearts, the stars, and the banner, which can be a tip from Doc Louis |
 | Mortal Kombat, II and 3 | your fighter and the rival from that game's roster, with their colors and special moves, the arena, the boss, the announcer's call and the win medallions |
 | Rampage | your monster and the rival, the day's city, day or night, and the food in the window |
