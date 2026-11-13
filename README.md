@@ -4,85 +4,88 @@ A Claude Code status line that deals each Claude session one of sixteen classic 
 
 ```
 CLAUDE v2.5.0                     Opus 5.5 1M context 60% left
-╭══ SUPER MARIO BROS 3 ══════════════════════════════════════╮
-║ ▃▸▹▹▹▹▹ P ▂▄▆▆▄▂          ▁▃▃▁       ▁▃▅▅▃▁     WORLD 1-4  ║
-║   ·   ·    ◎ | ◎   ·  ·    ·  ·Ꮇ  ? ? ?   ·   ·    ◎ | ◎   ║
-║  ▂▄▄▂      ▐█▌     ∘∘ʘ▂ ᗣ     ▂▄▄▂      ▐█▌     ᛏ▂▄▂   ᚹ   ║
-║ ╲[ᚹ][ᚠ][ᚹ]╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲╲M×3 $46╲ ║
-╰══ MARIO 003530 ════════════ PAUSE ═════════════ TIME 275 ══╯
-ʘ 7d 40% ↓3d12h  ᗣ 5h 70% ↓1h35m  xhigh
+╭══ PAC-MAN ═════════════════════════════════════════════════╮
+║ ═══════╦══════════════╦═══════════╔═━━═╗═══════════╦══════ ║
+║        ╹              ╹200        ║ᗣ  ᗣ║           ╹       ║
+║                    ᗣ  ᗤ         · · · · · · · · · · · · ·  ║
+║ ═ᗧᗧ═════════╩═════════════════════╩═════════════════════δ═ ║
+╰══ 1UP 003530 ═════════════════════════ HIGH SCORE 009990 ══╯
+ᗣ 7d 40% ↓3d0h  ᗣ 5h 70% ↓1h30m  xhigh
 ```
 
 The games: Pac-Man, Super Mario Bros, Super Mario Bros 2, Super Mario Bros 3, The Legend of Zelda, Punch-Out!!, Mortal Kombat, Mortal Kombat II, Mortal Kombat 3, Rampage, Double Dragon, Teenage Mutant Ninja Turtles, Contra, Sonic the Hedgehog, Sonic the Hedgehog 2 and NARC.
 
+![A frame from each game's scene](assets/games.png)
+
 ## How to read it
 
-The field is an animation that runs while Claude works. It does not track usage: the player drifts back and forth, and two chasers close in on it and fall back on a fixed loop. The animation moves one frame per second while the session works. It stops 30 seconds after the transcript last changed, so the terminal does not show idle tabs as busy.
+The field plays a short scene from the game while Claude works. Pac-Man eats a power pellet and turns on the ghosts, Mario stomps a Goomba and bumps a question block, and two Mortal Kombat fighters trade special moves until one of them hears FINISH HIM!. Each scene is a loop of about a minute, built from the game's best-known moments, and it does not track usage. The animation moves one frame per second while the session works. It stops 30 seconds after the transcript last changed, so the terminal does not show idle tabs as busy.
 
-The header shows the model and how much of the context window is left. The footer shows the remaining percentage and reset countdown for each rate limit, plus the `effortLevel` from `~/.claude/settings.json`.
+The header shows the model and how much of the context window is left. The footer shows the remaining percentage and reset countdown for each rate limit, each next to an enemy from the game, plus the `effortLevel` from `~/.claude/settings.json`.
 
 ### The screen
 
-Each game draws its own screen in 256 colors, close to the original cabinet. The field has four rows, and each row scrolls at its own speed so the scene has depth:
+Each game draws its own screen in 256 colors, close to the original cabinet or console. The field has four rows:
 
-| Row | Scrolls at | Shows |
-|---|---|---|
-| Backdrop | quarter speed | the far scenery: the upper maze wall, the Pac-Man ghost house, clouds, the Zelda status bar, the Punch-Out!! crowd, jungle palms, the moon, a city skyline |
-| Sky | half speed | Sonic's rings and palms, the Contra base wall, question blocks, a passing subway train, a burning building. The player and chasers hop into this row. |
-| Ground | full speed | the scenery the player walks on: pellets, the river, hills and pipes, bridges, the street |
-| Base | full speed | the foreground: the lower maze wall, Mario's brick underground, bubbling acid, the subway platform edge, street markings, the sewer under the turtles' street |
+| Row | Shows |
+|---|---|
+| Backdrop | the far scenery, such as clouds, a skyline or the Punch-Out!! crowd, and the top of the game's HUD: coins, health bars, the Zelda status bar |
+| Sky | the heads and shoulders of the characters, floating blocks, signs and the banner |
+| Ground | the rest of the characters and what they stand in front of: hills, pipes, buildings, the ring |
+| Base | the floor, such as brick ground, a bridge, acid or the ring apron, and the bottom of the HUD: lives, round clocks, the falcon weapon |
 
-A character takes the background color of the scenery under it. Chinese and Japanese characters, such as the neon 雙截龍 sign in Double Dragon and the 魂斗羅 base wall in Contra, take two columns.
+Characters, vehicles and most of the scenery are pixel art. Each cell holds two pixels, one above the other, drawn with half-block characters, so a character two rows tall is four pixels tall. Characters pass in front of the scenery and of each other, and whatever is behind shows through their empty pixels. In a side-scroller, rows further back scroll slower, so the scene has depth. Chinese and Japanese characters, such as the neon 雙截龍 sign in Double Dragon and the 魂斗羅 base wall in Contra, take two columns.
 
 ### The animation
 
+- Each beat shows a cause and its effect, a frame at a time: a wind-up, a hit, the reaction and the reward. Points pop up and rise from where they were scored.
+- The HUD follows the action, like the lives, coins, health bars and timers around an arcade screen. A health bar drops when a hit lands, a counter goes up when something is collected, and a round clock counts down. The Mortal Kombat games and NARC name the arena or stage in the middle of the top row when the field is wide enough.
+- A loop starts again the way the game itself would: after a death, with the next round or the next day, or as the last thing on screen leaves it.
 - The title shows the game's own logo colors, with a white glint sweeping across it, and lights chase along the top border.
-- Scenery animates in place, and actors can drag tails, fire shots, flash banners in the sky, and turn scared or stunned for part of each cycle.
-- Captions sit in the corners of the top and bottom rows, like the lives, credits, health bars and timers around an arcade screen. Some of them count down or drain. The Mortal Kombat games and NARC name the arena or stage in the middle of the top row when the field is wide enough.
 - Stars twinkle in the empty backdrop of the night scenes.
 - While the session is idle, the bottom border of an arcade game shows INSERT COIN. The console games (the three Super Mario Bros games, Zelda, Punch-Out!! and the two Sonic games) had no coin slot, so they show PAUSE, and Zelda shows its CONTINUE · SAVE · RETRY menu.
 
 ### What each game shows
 
-| Game | Scene and details |
+| Game | Scene and loop |
 |---|---|
-| Pac-Man | a ghost house with Inky and Clyde, two pellet corridors with blinking power pellets, eaten-ghost eyes, scared ghosts that flash white before they recover, ghost points, and the bonus fruit with a row of the fruit served so far |
-| Super Mario Bros | hills, bushes, pipes with Piranha Plants, spinning coins, a flagpole and castle, the HUD, run cycles, stomps and bouncing fireballs, with underground, treetop and castle levels |
-| Super Mario Bros 2 | tall grassy hills, log platforms, cherries, mushroom blocks and a POW block, sprouts to pluck and thrown turnips, a warp jar, Shy Guys, Birdo, a draining life meter and a Starman, with desert and ice worlds |
-| Super Mario Bros 3 | striped hills, giant bolted blocks, raccoon tails and power-up suits, the P-meter, item cards, the goal roulette, Goombas, Chain Chomps and spinning shells, with Desert Land under the Angry Sun and the airship |
-| The Legend of Zelda | the black status bar with items and hearts, trees, rocks, Armos statues and a lake, Octoroks, Moblins and Lynels, the sword beam, the Triforce, the old man's cave or a shop, Death Mountain with falling boulders, the graveyard with Ghini, and the dungeons, each with its own colors, keys, Keese, Stalfos, Darknuts, Wizzrobes or Gels, and the level's boss, with Ganon in Level 9 |
-| Punch-Out!! | the crowd with camera flashes, the ring ropes, the WVBA apron, health bars, hearts, star punches, a round clock, Mario as referee and the circuit's opponents |
-| Mortal Kombat | the Pit bridge over spikes, the Courtyard or Goro's Lair, health bars, win medallions, blood, Goro, and each fighter's own special move |
-| Mortal Kombat II | the Dead Pool with hooks, chains and skeletons in the acid, or the Living Forest, the Portal or the Tomb, special moves, Shao Kahn or Kintaro, and Toasty! |
-| Mortal Kombat 3 | the Subway with flickering lights, an EXIT sign and a passing train, or the Street, the Pit 3 or the Graveyard, special moves, freeze and net stuns, Shao Kahn or Motaro, and a round clock |
-| Rampage | buildings with flickering and burning windows, screaming people, a HOTEL sign, an antenna and water tower, a police car, rubble and dust behind the monster, thrown debris, exploding vehicles and damage meters |
-| Double Dragon | a brick wall with a neon 雙截龍 sign, graffiti and a fence, or the factory or forest missions, mission and time captions, gang members, a boss carrying Marian, weapons and a health bar |
-| Teenage Mutant Ninja Turtles | a burning building with smoke, a PIZZA sign and April at a window, the street with manholes and the Party Wagon, the sewer with Leatherhead, Foot Soldiers, a caped boss, a health bar, lives and pizzas |
-| Contra | jungle palms, the Red Falcon base wall with the 魂斗羅 kanji, sniper towers and a blinking core, a bridge that blows up behind the player, a scuba soldier in the river, a falcon capsule, spread-gun shots, life medals, and the alien lair (心臓) stage |
-| Sonic the Hedgehog | hills by the sea, palms, spinning rings, a floating platform and an item monitor, flowers, a loop and spikes on the checkered soil, Motobugs and Buzz Bombers that set animals free, and the spinning goal sign, with Marble Zone over lava and Star Light Zone at night |
-| Sonic the Hedgehog 2 | hills and waterfalls, palms, rings, a corkscrew, sunflowers and spikes, Tails following Sonic, Coconuts and Buzzers, a Chaos Emerald in seven colors and the emeralds collected, with Chemical Plant Zone over the Mega Mack and Casino Night Zone with bumpers and a slot machine |
-| NARC | a night skyline with a flickering LIQUOR sign, street lamps, a police light bar, the red Narc car, dealers, clowns and Dobermans, gunfire or rockets that blow thugs apart, cash and drug stashes, ammo and rocket counts and the bust count, with the Bridge over the river and Mr. Big's lab |
+| Pac-Man | the maze, with the ghost house and its pink door hanging from the top wall. READY!, a chase down a corridor of pellets that vanish as Pac-Man eats them, the power pellet, both ghosts eaten for 200 and 400 while the second flashes white, their eyes flying home over the door, and the bonus fruit and its score. Then a ghost drops down in front of him, and he spins away before the next READY! |
+| Super Mario Bros | World 1-1 scrolling past, with clouds, hills, bushes and pipes over the brick ground. Mario stomps a Goomba flat for 100, hops into a question block for a coin and 200, then stomps a Koopa and kicks its shell away. In the castle he jumps Bowser's fire on the bridge, Bowser drops into the lava, and THANK YOU MARIO! appears |
+| Super Mario Bros 2 | Subcon's grassland, with striped hills, palms and vegetable tufts. The hero pulls a turnip and throws it at a Shy Guy, collects five cherries for a Starman, takes one of Birdo's eggs and loses a segment of the life meter, throws a POW block that flashes the screen and drops every enemy, and jumps for a heart that refills the meter |
+| Super Mario Bros 3 | Grass Land, with outlined striped hills and giant bolted blocks over the black stage band that holds the HUD. Raccoon Mario fills the P-meter and takes off, grabs coins in the air, stomps a Goomba and a Koopa and kicks the shell into the next enemy for 400. Then he jumps into the goal roulette: COURSE CLEAR!, YOU GOT A CARD, and the card joins the HUD in its own color |
+| The Legend of Zelda | the black status bar with the items and the hearts, over the overworld seen from above: cliffs, trees, Armos statues and a lake. An Octorok's rock costs Link a heart, which turns into an empty container. He stabs the Octorok, picks up the heart it drops, and at full health his sword flies as a beam into the next monster, which drops a rupee. The old man's cave, Death Mountain with its boulders, the graveyard and the nine dungeons each have their own scene; in a dungeon, Link takes a key, beats the level's boss and holds up the Triforce piece |
+| Punch-Out!! | the ring from the side, under a dark crowd full of camera flashes. Little Mac jabs into a block and loses a heart, ducks the opponent's big punch after his tell, counters for a star, and leaps into a star uppercut as every camera flashes. The opponent goes down, Mario counts 1, 2, 3, Doc Louis shouts a tip, and the boxer gets up for FIGHT! |
+| Mortal Kombat | one round in the Pit (a stone bridge over spikes under the moon), the Courtyard or Goro's Lair, with Goro or Shang Tsung watching. FIGHT!, an exchange with blood and draining health bars, both fighters' special moves (Scorpion's spear, Sub-Zero's freeze, Liu Kang's fireball, Raiden's lightning), an uppercut that sends the rival flying, FINISH HIM! while it staggers, then the arena goes dark for the fatality and the hero wins |
+| Mortal Kombat II | the same round in the Dead Pool (hooks over bubbling acid), the Living Forest, the Portal or the Kombat Tomb, with Shao Kahn or Kintaro watching. Dan Forden's face comes up with TOASTY! at the uppercut, and the finisher is a FATALITY, a FRIENDSHIP or a BABALITY |
+| Mortal Kombat 3 | the same round in the Subway (a train rushes past just after FIGHT!), the Street, the Pit 3 or the Graveyard, with Shao Kahn or Motaro watching and a round clock counting down from 99. Sub-Zero's ice and Cyrax's net hold the rival in place, and the finisher is a FATALITY, an ANIMALITY or a BABALITY |
+| Rampage | a city block by day or by night, with a tan tower and the rival's tower beside it. The monster climbs and punches holes in the tower, eats the person screaming HELP! in a window for 200, swats the helicopter that shoots it for 500, and jumps down as the tower sinks into a dust cloud and leaves rubble for 1000. The next day starts with a new tower |
+| Double Dragon | a dark red brick wall with the neon 雙截龍 sign, a chain-link fence and a gray sidewalk, the factory with its conveyor belt, or the forest. Billy jabs a gang member with hit sparks and kicks him down for 100, picks up the weapon he drops and uses it for 200, and knocks him out with a flying jump kick for 300. Then the boss walks past behind him with Marian over his shoulder |
+| Teenage Mutant Ninja Turtles | a night street with a burning building, April waving from a window, a PIZZA sign and the Party Wagon. The turtle sends a Foot Soldier spinning into the sky, takes a kick from one that leaps out of a manhole, beats the boss as both health bars drain, and eats the pizza it drops to refill his own |
+| Contra | the stage 1 jungle at night, with palms, a sniper tower and the Red Falcon base wall with its 魂斗羅 sign, over a bridge that is always blown up behind the player. Bill shoots a soldier, bursts a falcon capsule open for the session's weapon and fires its own shots, then trades shots with a sniper and falls into the river before he respawns. The alien lair (心臓) has flesh walls, buggers and an egg pod |
+| Sonic the Hedgehog | Green Hill scrolling fast over checkered soil, with clouds, palms and the sea behind. The title card shows while Sonic collects rings. He spin-jumps onto a Motobug that frees an animal, rolls into an item monitor for ten rings, runs the loop, smashes a Buzz Bomber, loses his rings on the spikes and grabs two back, and passes the spinning goal sign. Marble Zone runs over lava, Star Light Zone is at night, and act 3 brings Robotnik and his wrecking ball |
+| Sonic the Hedgehog 2 | Emerald Hill, with waterfalls and sunflowers. Tails follows Sonic through a row of rings, both spin-dash through a Badnik that frees an animal, they bounce on a monitor, jump a Buzzer's shot and smash it, and a star post adds a Chaos Emerald before the goal sign. Chemical Plant runs over the Mega Mack, Casino Night has bumpers and a slot machine that pays out rings, and act 2 brings Robotnik's drill car |
+| NARC | a night street with a skyline, a flickering LIQUOR sign and street lamps. Max Force blows a charging thug apart with his gun or a rocket and grabs the cash for 500, then busts a dealer who drops his stash while the sky strobes red and blue, and the red Narc car takes the dealer away. The Bridge has cables, traffic and the river, and in Mr. Big's lab Mr. Big laughs at Max and runs off |
 
 ### Per-session variety
 
-Each session also gets small variations of its game, picked from a hash of the session ID. A session keeps the same picks for its whole life, and a new session rolls new ones.
+Each session also gets its own version of its game, picked from a hash of the session ID. A session keeps the same picks for its whole life, and a new session rolls new ones.
 
 | Game | What varies |
 |---|---|
-| Pac-Man | which two ghosts chase, the fruit, the spare lives and the banner (READY!, PLAYER ONE or GAME OVER) |
-| Super Mario Bros | Mario or Luigi, the world and level (level 2 is underground, level 3 is the treetops, level 4 is the castle), the coin count and the lives |
-| Super Mario Bros 2 | Mario, Luigi, Toad or Peach, the world (2 and 6 are desert, 4 is ice), the enemies, the cherries and the lives |
-| Super Mario Bros 3 | Mario or Luigi, the suit (Super, Fire, Raccoon, Tanooki, Frog or Hammer), Grass Land, Desert Land or the airship, the enemies, the item cards, the coins and the lives |
-| The Legend of Zelda | the overworld, the old man's cave, Death Mountain, the graveyard or one of nine dungeons, the tunic color, the B item, the hearts, the enemies and the boss |
-| Punch-Out!! | the opponent and the next contender from the circuit, the hearts, the stars, and the banner, which can be a tip from Doc Louis |
-| Mortal Kombat, II and 3 | your fighter and the rival from that game's roster, with their colors and special moves, the arena, the boss, the announcer's call and the win medallions |
+| Pac-Man | which two ghosts chase while the other two wait in the house, the fruit and its score, the spare lives and the opening banner (READY!, PLAYER ONE, or READY! with GAME OVER after the death) |
+| Super Mario Bros | Mario or Luigi, the world and level (level 2 is underground, level 3 is the treetops, level 4 is the castle with Bowser), the coin count and the lives |
+| Super Mario Bros 2 | Mario, Luigi, Toad or Peach, the world and level (worlds 2 and 6 are desert, 4 is ice), the enemy the Starman knocks over, the Shy Guys' robe and the lives |
+| Super Mario Bros 3 | Mario or Luigi, the suit (Super, Fire, Raccoon, Tanooki, Frog or Hammer, which fly, jump or throw), Grass Land, Desert Land under the Angry Sun or the airship with a Koopaling, the first enemy, the enemy the shell hits, the cards, the coins and the lives |
+| The Legend of Zelda | the place (the overworld, the old man's cave, Death Mountain, the graveyard or one of the nine dungeons with its own colors, guard and boss), the tunic, the sword, the B item, the heart containers, the overworld monsters, the cave dweller and gift, and the keys |
+| Punch-Out!! | the opponent from the circuit in his own colors (King Hippo is wider and wears a crown), the next contender, the stars and hearts, Doc Louis's tip and the round clock |
+| Mortal Kombat, II and 3 | your fighter and the rival from that game's roster, with their colors, special moves and finishers, the arena, the boss watching, the round, a flawless round in some sessions, and in II and 3 the finisher |
 | Rampage | your monster and the rival, the day's city, day or night, and the food in the window |
-| Double Dragon | Billy (1P, blue) or Jimmy (2P, red), the mission, the gang member, the boss, the weapon and the spare lives |
-| Teenage Mutant Ninja Turtles | your turtle in its mask color with its own weapon, a partner turtle, the Foot Soldiers' uniform color, the boss, the banner, the lives and the pizza count |
-| Contra | Bill (1P, blue) or Lance (2P, red), the weapon (S, M, L, F or R) with its own shots, the stage, the spare medals and the banner |
-| Sonic the Hedgehog | the zone (Green Hill, Marble or Star Light), the act (act 3 brings Robotnik and his wrecking ball), the Badniks, the clock and the lives |
-| Sonic the Hedgehog 2 | Sonic and Tails, Sonic alone, Tails alone or Super Sonic, the zone (Emerald Hill, Chemical Plant or Casino Night), the act (act 2 brings Robotnik), the Badniks, the clock, the lives and the Chaos Emeralds |
-| NARC | Max Force (1P, blue) or Hit Man (2P, red), the gun or the rockets, the stage (Sunset Strip, the Bridge or Mr. Big's lab, where Mr. Big waits), the thug, the ammo, the rockets, the busts and the banner |
+| Double Dragon | Billy (1P, blue) or Jimmy (2P, red), the mission, the gang member, the boss carrying Marian, the weapon and the spare lives |
+| Teenage Mutant Ninja Turtles | your turtle in its mask color with its own weapon, the partner turtle, the boss, the Foot Soldiers' uniform, the banner, the lives and the pizza count |
+| Contra | Bill (1P, blue) or Lance (2P, red), the weapon (S, M, L, F or R) with its own shots, the stage (the jungle or the alien lair), the spare medals and the banner |
+| Sonic the Hedgehog | the zone (Green Hill, Marble or Star Light), the act (act 3 brings Robotnik), the Badniks, the clock and the lives |
+| Sonic the Hedgehog 2 | Sonic and Tails, Sonic alone, Tails alone or Super Sonic, the zone (Emerald Hill, Chemical Plant or Casino Night), the act (act 2 brings Robotnik), the Badniks, the Chaos Emeralds, the clock and the lives |
+| NARC | Max Force (1P, blue) or Hit Man (2P, red), the gun or the rockets, the thug, the stage (Sunset Strip, the Bridge or Mr. Big's lab), the opening banner, the ammo, the rockets and the busts |
 
 ### The scoreboard
 

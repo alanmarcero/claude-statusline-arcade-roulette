@@ -28,7 +28,9 @@ const columns = Number(ttySize.split(' ')[1]) || FALLBACK_COLUMNS
 
 // Claude Code sends one session_id per instance, so each instance keeps its game across renders.
 const sessionId = input.session_id ?? process.ppid
-const game = customize(GAMES.find((candidate) => candidate.id === values.game) ?? pickGame(sessionId), sessionId)
+const id = GAMES.find((candidate) => candidate === values.game) ?? pickGame(sessionId)
+const { default: dealt } = await import(`./lib/games/${id}.js`)
+const game = customize(dealt, sessionId)
 
 const nowSeconds = Math.floor(Date.now() / 1000)
 
