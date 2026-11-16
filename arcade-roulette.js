@@ -16,7 +16,7 @@ const { values } = parseArgs({ options: { game: { type: 'string' }, width: { typ
 
 const HIGH_SCORES_PATH = join(homedir(), '.claude', 'arcade-roulette-scores.json')
 
-const [input, settings, highScores] = [0, join(homedir(), '.claude', 'settings.json'), HIGH_SCORES_PATH].map((source) => {
+const [input, highScores] = [0, HIGH_SCORES_PATH].map((source) => {
   try {
     return JSON.parse(readFileSync(source, 'utf8'))
   } catch {
@@ -61,7 +61,7 @@ console.log(
     width: Number(values.width) || columns - BUDDY_RESERVE,
     frame,
     nowSeconds,
-    effort: settings.effortLevel,
+    effort: input.effort?.level,
     highScore,
     isIdle: frame < nowSeconds,
   }),

@@ -21,7 +21,7 @@ The games: Pac-Man, Super Mario Bros, Super Mario Bros 2, Super Mario Bros 3, Th
 
 The field plays a short scene from the game while Claude works. Pac-Man eats a power pellet and turns on the ghosts, Mario stomps a Goomba and bumps a question block, and two Mortal Kombat fighters trade special moves until one of them hears FINISH HIM!. Each scene is a loop of about a minute, built from the game's best-known moments, and it does not track usage. The animation moves one frame per second while the session works. It stops 30 seconds after the transcript last changed, so the terminal does not show idle tabs as busy.
 
-The header shows the model and how much of the context window is left. The footer shows the remaining percentage and reset countdown for each rate limit, each next to an enemy from the game, plus the `effortLevel` from `~/.claude/settings.json`.
+The header shows the model and how much of the context window is left. The footer shows the remaining percentage and reset countdown for each rate limit, each next to an enemy from the game, plus the session's current effort level.
 
 ### The screen
 
